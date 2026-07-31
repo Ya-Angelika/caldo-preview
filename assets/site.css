@@ -1346,9 +1346,20 @@ a.con__val:hover { color: var(--accent); }
   .con__map { min-height: 320px; }
 }
 @media (max-width: 639px) {
-  .con__grid { grid-template-columns: 1fr; }
+  .con__grid { grid-template-columns: 1fr; row-gap: var(--s8); }
   .con__item--wide { grid-column: 1; }
-  .con__phone { font-size: 28px; line-height: 25px; }
+  .con__phone { font-size: 20px; line-height: 24px; }
+  /* На телефоне сайт меняет иерархию местами: подпись — крупная,
+     Alethia капсом с двоеточием, само значение мельче и приглушено.
+     У нас было наоборот: серая мелкая подпись над обычным текстом. */
+  .con__label {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: 16px; line-height: 20px;
+    text-transform: uppercase; opacity: 1;
+  }
+  .con__label::after { content: ":"; }
+  .con__val { font-size: 12px; line-height: 16px; color: var(--muted); }
+  .con__item { gap: var(--s3); }
 }
 
 /* Заявка на фотографии: снимок во всю ширину, форма поверх него слева.
@@ -1387,13 +1398,20 @@ a.con__val:hover { color: var(--accent); }
      сайта: фото растягивается на весь блок, поля светлые по тёмному.
      Раньше фото ложилось сверху отдельной картинкой, а форма уезжала
      под него на бежевый фон и теряла связь со снимком. */
-  .cform { width: auto; height: auto; padding: 0; margin-inline: var(--gutter); }
+  /* Как в мобильной версии сайта: снимок на весь блок, поверх него
+     тёмная полупрозрачная панель с заголовком и полями. Панель не
+     доходит до низа — под ней видно продолжение кадра. */
+  .cform { width: auto; height: auto; padding: 0 0 70px; margin-inline: var(--gutter); }
   .cform__ph { position: absolute; inset: 0; left: 0; width: 100%; height: 100%; }
   .cform__ph::after {
     content: ""; position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(20,19,19,.72) 0%, rgba(20,19,19,.58) 55%, rgba(20,19,19,.72) 100%);
+    background: linear-gradient(180deg, rgba(20,19,19,.25) 0%, rgba(20,19,19,.05) 60%, rgba(20,19,19,.3) 100%);
   }
-  .cform__inner { position: relative; width: auto; left: auto; top: auto; padding: var(--s10) var(--s6) var(--s12); }
+  .cform__inner {
+    position: relative; width: auto; left: auto; top: auto;
+    padding: var(--s8) var(--s6) var(--s10);
+    background: rgba(38, 43, 48, .88);
+  }
   .cform__form { width: 100%; max-width: 460px; }
   .form--dark .consent { color: var(--muted); }
   .form--dark .consent a { color: var(--accent); border-bottom-color: var(--accent); }
@@ -1613,7 +1631,7 @@ a.con__val:hover { color: var(--accent); }
   .section__label,
   .abx__p, .adv__title, .adv__text,
   .steps__text, .prod__pt-n, .prod__pt-t,
-  .rew__txt, .par__note, .cta__text, .section__note,
+  .rew__txt, .par__note, .section__note,
   .btn {
     font-size: 12px; line-height: 16px;
   }
@@ -1633,4 +1651,12 @@ a.con__val:hover { color: var(--accent); }
   .abx__stat .abx__hr { margin: var(--s4) 0 var(--s2); }
   .abx__title { margin-top: var(--s2); }
   .abx__ph { margin-block: var(--s5); }
+}
+
+/* Блок «Caldo — тепло, которое вы искали» на телефоне — по сайту,
+   набор res-320: подзаголовок 16 капсом (на десктопе 20), снимок
+   280 × 225 почти квадратом, а не полосой 320 в высоту. */
+@media (max-width: 639px) {
+  .cta__text { font-size: 16px; line-height: 20px; text-transform: uppercase; }
+  .cta__ph { height: auto !important; aspect-ratio: 280 / 225; }
 }
