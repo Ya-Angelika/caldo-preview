@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сотрудничество с CALDO — дизайнерам, строителям, дилерам</title>
+<meta name="description" content="Условия сотрудничества для дизайнеров, строителей, партнёров, агентов и дилеров.">
+
+<!-- Tilda Sans — тот же источник, что и на текущем сайте caldo.studio.
+     Подключён неблокирующим способом: если CDN тормозит, страница всё равно
+     рисуется, а на машинах с установленным Tilda Sans шрифт берётся локально. -->
+<link rel="preconnect" href="https://static.tildacdn.com" crossorigin>
+<link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css"></noscript>
+<link rel="stylesheet" href="assets/site.css?v=32">
+</head>
+
+<body>
+<script>
+/* Масштаб макета под ширину окна — то же, что делает модуль ANNEXX на сайте:
+   сетка 1200 растягивается на всё окно. Ниже 1200 масштаб не трогаем,
+   там работают брейкпоинты. */
+(function () {
+  var root = document.documentElement;
+  function fit() {
+    var w = root.clientWidth;
+    root.style.setProperty('--k', w >= 1200 ? (w / 1200).toFixed(4) : '1');
+  }
+  fit();
+  addEventListener('resize', fit, { passive: true });
+})();
+</script>
+
+<header class="header header--solid header--static" id="header">
+  <div class="shell header__inner">
+    <a class="logo" href="index.html" aria-label="CALDO — на главную">Caldo</a>
+
+    <nav class="nav" aria-label="Основная навигация">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="index.html">О компании</a></li>
+    <li class="nav__item"><a class="nav__link" href="catalog.html">Каталог</a></li>
+    <li class="nav__item"><a class="nav__link" href="partners.html" aria-current="page">Сотрудничество</a></li>
+    <li class="nav__item"><a class="nav__link" href="gallery.html">Фотогалерея</a></li>
+    <li class="nav__item"><a class="nav__link" href="reviews.html">Отзывы</a></li>
+    <li class="nav__item"><a class="nav__link" href="contacts.html">Контакты</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__aside">
+      <a class="header__phone" href="tel:+78003006152">+7 (800) 300 61 52</a>
+      <a class="btn btn--primary" href="contacts.html">Связаться с нами</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Открыть меню разделов">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" id="menu" data-open="false" aria-label="Разделы сайта">
+  <ul class="overlay__list">
+    <li><a class="overlay__link" href="index.html">О компании</a></li>
+    <li><a class="overlay__link" href="catalog.html">Каталог</a></li>
+    <li><a class="overlay__link" href="partners.html" aria-current="page">Сотрудничество</a></li>
+    <li><a class="overlay__link" href="gallery.html">Фотогалерея</a></li>
+    <li><a class="overlay__link" href="reviews.html">Отзывы</a></li>
+    <li><a class="overlay__link" href="contacts.html">Контакты</a></li>
+  </ul>
+  <div class="overlay__contacts">
+    <a href="tel:+78003006152">+7 (800) 300 61 52</a>
+    <a href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a>
+    <div class="overlay__messengers">
+      <a href="https://t.me/caldo_studio" rel="noopener">Telegram</a>
+      <a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a>
+      <a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a>
+    </div>
+    <a class="btn btn--primary" href="contacts.html">Связаться с нами</a>
+  </div>
+</div>
+
+<main id="top" class="page">
+  <!-- Хлебные крошки: одинаковые на всех внутренних страницах -->
+  <div class="shell">
+    <p class="crumbs"><a href="index.html">Главная</a><span aria-hidden="true">&#10230;</span>Сотрудничество</p>
+  </div>
+
+<!-- ============ СОТРУДНИЧЕСТВО ============
+       Композиция блока rec632091554 со страницы «Оптовикам»: заголовок
+       90/81 на 74/228, подстрока 81/402, короткий текст справа на 819/152,
+       две кнопки на 440. Высота артборда 542. -->
+  <section class="section section--par" id="partners">
+    <div class="par">
+      <h2 class="section__title par__title">Покупайте радиаторы</h2>
+      <p class="par__sub">мелким и&nbsp;крупным оптом с&nbsp;выгодой до&nbsp;40%</p>
+      <p class="par__note">Добавьте в&nbsp;ваш ассортимент уникальное теплооборудование Caldo</p>
+      <!-- ТЗ: «сразу же кнопка — СВЯЗАТЬСЯ С НАМИ» -->
+      <a class="btn btn--dark par__btn par__btn--1" href="contacts.html">Связаться с нами</a>
+      <a class="btn btn--ghost par__btn par__btn--2" href="catalog.html">Перейти в каталог</a>
+    </div>
+  </section>
+
+  <!-- ============ ВОЗНАГРАЖДЕНИЯ ============
+       Блок rec632151438 со страницы «Дизайнерам»: линия 80/100 шириной 1200,
+       надзаголовок 131, заголовок 75/188 шириной 855, подстрока 79/308,
+       три уровня — цифры 150 px на 399, названия 548, описания 581,
+       ниже тёмная плашка с формой на фотографии. Высота артборда 1335. -->
+  <section class="section section--rew">
+    <div class="rew">
+      <span class="rew__rule"></span>
+      <span class="section__label rew__label">Вознаграждения</span>
+      <h2 class="section__title rew__title">Начните получать вознаграждения</h2>
+      <p class="rew__sub">С продаж радиаторов</p>
+
+      <!-- Три уровня — потоком в три колонки. По координатам они наезжали:
+           название в две строки перекрывало описание. -->
+      <div class="rew__levels">
+        <div class="rew__lvl">
+          <span class="rew__num">5%</span>
+          <span class="rew__lvl-name">Минимальное вознаграждение</span>
+          <p class="rew__txt">Делитесь промокодом с&nbsp;клиентом, при предъявлении которого
+            он&nbsp;получит скидку 5%. После использования промокода вам придёт смс-уведомление.</p>
+        </div>
+        <div class="rew__lvl">
+          <span class="rew__num">10%</span>
+          <span class="rew__lvl-name">Следующий уровень</span>
+          <p class="rew__txt">Рассчитывайте необходимые клиенту позиции и&nbsp;делайте заказ
+            за&nbsp;него, а&nbsp;мы&nbsp;объясним, как это делать.</p>
+        </div>
+        <div class="rew__lvl">
+          <span class="rew__num">15%</span>
+          <span class="rew__lvl-name">Максимальный уровень</span>
+          <p class="rew__txt">Заказывайте радиаторы клиентам и&nbsp;отправляйте нам
+            визуализации, 3D-модели и&nbsp;чертежи мы&nbsp;предоставим.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section section--steps">
+      <!-- ============ ЭТАПЫ РАБОТЫ ============
+           Блок rec819904325: линия 50, надзаголовок 81, заголовок 74/138,
+           подстрока 312, четыре шага двумя парами на 376 и 490,
+           фотография 879/120 размером 341 × 398. Высота 706. -->
+      <div class="steps">
+        <span class="steps__rule"></span>
+        <span class="section__label steps__label">Этапы работы</span>
+        <h2 class="section__title steps__title">Изготавливаем и&nbsp;отправляем заказ</h2>
+        <p class="steps__sub">точно в&nbsp;срок</p>
+
+        <div class="steps__item steps__item--1">
+          <span class="steps__num">1</span>
+          <span class="steps__name">Сделайте заказ</span>
+          <p class="steps__text">Перезвоним вам для&nbsp;консультации по&nbsp;цене и&nbsp;срокам</p>
+        </div>
+        <div class="steps__item steps__item--2">
+          <span class="steps__num">2</span>
+          <span class="steps__name">Оплатите 50% суммы</span>
+          <p class="steps__text">Начнём производство сразу после оплаты</p>
+        </div>
+        <div class="steps__item steps__item--3">
+          <span class="steps__num">3</span>
+          <span class="steps__name">Внесите остаток, когда товар будет готов</span>
+          <p class="steps__text">Свяжемся, чтобы сообщить о&nbsp;готовности радиатора.
+            Вам нужно внести остаток стоимости</p>
+        </div>
+        <div class="steps__item steps__item--4">
+          <span class="steps__num">4</span>
+          <span class="steps__name">Заберите покупку</span>
+          <p class="steps__text">Отправим радиаторы сразу после оплаты.
+            Расходы на&nbsp;доставку берём на&nbsp;себя</p>
+        </div>
+
+        <div class="steps__ph" role="img" aria-label="Радиатор CALDO Ronda"
+             style="background-image: url('https://static.tildacdn.com/tild3961-6535-4633-b937-613463653738/Ronda___2_1.png')"></div>
+      </div>
+  </section>
+
+  <!-- ============ КОНТАКТЫ ============
+       Блок rec632091629 со страницы «Оптовикам»: линия 416/50 шириной 800,
+       надзаголовок 81, заголовок 410/138 шириной 611, текст 417/312,
+       форма 417/400 шириной 442, фотография -52/318 с параллаксом.
+       Высота артборда 820. -->
+  <section class="section section--cta">
+    <div class="cta">
+      <!-- Снимок прислал заказчик. Кадр сдвинут вправо, чтобы радиатор
+           попал в узкую колонку 300 × 560 целиком. -->
+      <div class="cta__ph" role="img" aria-label="Зелёный вертикальный радиатор CALDO в ванной комнате"
+           style="background-image: url('assets/img/radiator-green-bath.png')"></div>
+
+      <span class="cta__rule"></span>
+      <span class="section__label cta__label">Контакты</span>
+      <h2 class="section__title cta__title">Caldo — тепло, которое вы искали</h2>
+      <p class="cta__text">Заполните форму, мы&nbsp;свяжемся с&nbsp;вами и&nbsp;обсудим детали заказа</p>
+
+      <form class="form cta__form" novalidate>
+        <div class="field">
+          <label class="visually-hidden" for="cta-name">Ваше имя</label>
+          <input id="cta-name" name="name" type="text" autocomplete="name" placeholder="Ваше имя" required>
+        </div>
+        <div class="field">
+          <label class="visually-hidden" for="cta-email">Email</label>
+          <input id="cta-email" name="email" type="email" autocomplete="email" placeholder="Email">
+        </div>
+        <div class="field field--phone">
+          <label class="visually-hidden" for="cta-phone">Телефон</label>
+          <span class="field__code" aria-hidden="true">+7</span>
+          <input id="cta-phone" name="phone" type="tel" autocomplete="tel" placeholder="(000) 000-00-00" required>
+        </div>
+        <label class="consent">
+          <input type="checkbox" name="consent" required>
+          <span>Я соглашаюсь с <a href="#">политикой конфиденциальности</a></span>
+        </label>
+        <button class="btn btn--dark btn--lg" type="submit">Связаться с нами</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__top">
+      <div>
+        <div class="footer__logo">Caldo</div>
+        <p>Стальные трубчатые радиаторы<br>от производителя. Гарантия 20 лет.</p>
+      </div>
+      <div class="footer__cols">
+        <div class="footer__col">
+          <h4>Разделы</h4>
+          <ul>
+            <li><a href="index.html">О компании</a></li>
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="partners.html">Сотрудничество</a></li>
+            <li><a href="gallery.html">Фотогалерея</a></li>
+            <li><a href="reviews.html">Отзывы</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Связь</h4>
+          <ul>
+            <li><a href="tel:+78003006152">+7 (800) 300 61 52</a></li>
+            <li><a href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a></li>
+            <li><a href="https://t.me/caldo_studio" rel="noopener">Telegram</a></li>
+            <li><a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a></li>
+            <li><a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 CALDO. Все права защищены</span>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=32"></script>
+</body>
+</html>

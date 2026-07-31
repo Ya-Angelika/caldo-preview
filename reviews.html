@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Отзывы о радиаторах CALDO</title>
+<meta name="description" content="Отзывы клиентов о стальных трубчатых радиаторах CALDO.">
+
+<!-- Tilda Sans — тот же источник, что и на текущем сайте caldo.studio.
+     Подключён неблокирующим способом: если CDN тормозит, страница всё равно
+     рисуется, а на машинах с установленным Tilda Sans шрифт берётся локально. -->
+<link rel="preconnect" href="https://static.tildacdn.com" crossorigin>
+<link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css"></noscript>
+<link rel="stylesheet" href="assets/site.css?v=32">
+</head>
+
+<body>
+<script>
+/* Масштаб макета под ширину окна — то же, что делает модуль ANNEXX на сайте:
+   сетка 1200 растягивается на всё окно. Ниже 1200 масштаб не трогаем,
+   там работают брейкпоинты. */
+(function () {
+  var root = document.documentElement;
+  function fit() {
+    var w = root.clientWidth;
+    root.style.setProperty('--k', w >= 1200 ? (w / 1200).toFixed(4) : '1');
+  }
+  fit();
+  addEventListener('resize', fit, { passive: true });
+})();
+</script>
+
+<header class="header header--solid header--static" id="header">
+  <div class="shell header__inner">
+    <a class="logo" href="index.html" aria-label="CALDO — на главную">Caldo</a>
+
+    <nav class="nav" aria-label="Основная навигация">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="index.html">О компании</a></li>
+    <li class="nav__item"><a class="nav__link" href="catalog.html">Каталог</a></li>
+    <li class="nav__item"><a class="nav__link" href="partners.html">Сотрудничество</a></li>
+    <li class="nav__item"><a class="nav__link" href="gallery.html">Фотогалерея</a></li>
+    <li class="nav__item"><a class="nav__link" href="reviews.html" aria-current="page">Отзывы</a></li>
+    <li class="nav__item"><a class="nav__link" href="contacts.html">Контакты</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__aside">
+      <a class="header__phone" href="tel:+78003006152">+7 (800) 300 61 52</a>
+      <a class="btn btn--primary" href="contacts.html">Связаться с нами</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Открыть меню разделов">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" id="menu" data-open="false" aria-label="Разделы сайта">
+  <ul class="overlay__list">
+    <li><a class="overlay__link" href="index.html">О компании</a></li>
+    <li><a class="overlay__link" href="catalog.html">Каталог</a></li>
+    <li><a class="overlay__link" href="partners.html">Сотрудничество</a></li>
+    <li><a class="overlay__link" href="gallery.html">Фотогалерея</a></li>
+    <li><a class="overlay__link" href="reviews.html" aria-current="page">Отзывы</a></li>
+    <li><a class="overlay__link" href="contacts.html">Контакты</a></li>
+  </ul>
+  <div class="overlay__contacts">
+    <a href="tel:+78003006152">+7 (800) 300 61 52</a>
+    <a href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a>
+    <div class="overlay__messengers">
+      <a href="https://t.me/caldo_studio" rel="noopener">Telegram</a>
+      <a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a>
+      <a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a>
+    </div>
+    <a class="btn btn--primary" href="contacts.html">Связаться с нами</a>
+  </div>
+</div>
+
+<main id="top" class="page">
+  <!-- Хлебные крошки: одинаковые на всех внутренних страницах -->
+  <div class="shell">
+    <p class="crumbs"><a href="index.html">Главная</a><span aria-hidden="true">&#10230;</span>Отзывы</p>
+  </div>
+
+<!-- ============ ОТЗЫВЫ ============
+       Шапка — артборд rec819904332: линия 421/50, надзаголовок 81,
+       заголовок 411/138 шириной 704. Высота 320.
+       Ниже слайдер отзывов из блока rec819904333 (t728). -->
+  <section class="section section--rev" id="reviews">
+    <div class="rev">
+      <span class="rev__rule"></span>
+      <span class="section__label rev__label">Отзывы</span>
+      <h2 class="section__title rev__title">Приносим комфорт нашим клиентам</h2>
+    </div>
+
+    <div class="shell">
+      <div class="slider rev__slider" data-autoplay="off">
+        <div class="slider__track">
+          <div class="slider__slide rev__slide is-on">
+            <div class="rev__side">
+              <span class="rev__model">Ronda</span>
+              <div class="rev__ph" role="img" aria-label="Фотография от клиента по имени Олег"
+                 style="background-image: url('https://static.tildacdn.com/tild3931-6637-4838-a564-613664303237/16860607478_1.png')"></div>
+            </div>
+            <div class="rev__body">
+              <p class="rev__text">Рекомендую. Могу сравнить с вероятно самым известным и крупным конкурентом. У ребят из Caldo все в разы лучше: отличные менеджеры, которые всегда подскажут и помогут, приемлемые сроки, которые они соблюдают, согласитесь, в ремонте это крайне важно (в моем случае все было готово на неделю раньше), высокое качество, а самое главное очень приятная цена в сравнении с конкурентами. Спасибо ребятам за отличный продукт!</p>
+              <span class="rev__name">Олег</span>
+              <span class="rev__date">2 февраля</span>
+            </div>
+          </div>
+          <div class="slider__slide rev__slide">
+            <div class="rev__side">
+              <span class="rev__model">Bordo</span>
+              <div class="rev__ph" role="img" aria-label="Фотография от клиента по имени Игорь"
+                 style="background-image: url('https://static.tildacdn.com/tild3264-3530-4461-b637-306632323537/18027701504_1.png')"></div>
+            </div>
+            <div class="rev__body">
+              <p class="rev__text">Приобрел вертикальный радиатор с&nbsp;фирмы Caldo, поначалу были сомнения, боялся попасть на&nbsp;недобросовестных исполнителей, так как нужно было внести предоплату 50%. Девушка любезно предоставила всю нужную информацию о&nbsp;их&nbsp;фирме, и&nbsp;все сомнения отпали. Радиатор приехал весьма быстро, примерно через неделю уже был у&nbsp;меня, батарея была отлично упакована плюс в&nbsp;деревянной обрешётке. Что по&nbsp;поводу качества изделия&nbsp;— выше всех похвал, сделано всё идеально, отличный порошковый окрас. После установки и&nbsp;запуска был удивлён, как батарея греет: тепло отдаёт прекрасно, и&nbsp;самое классное&nbsp;— после отключения нагрева она долго сохраняет тепло. Настоятельно рекомендую данного производителя!</p>
+              <span class="rev__name">Игорь</span>
+              <span class="rev__date">2 апреля</span>
+            </div>
+          </div>
+          <div class="slider__slide rev__slide">
+            <div class="rev__side">
+              <span class="rev__model">Aria</span>
+              <div class="rev__ph" role="img" aria-label="Фотография от клиента по имени Егор"
+                 style="background-image: url('https://static.tildacdn.com/tild3037-3434-4232-a133-303039366531/16932650587_1.png')"></div>
+            </div>
+            <div class="rev__body">
+              <p class="rev__text">Хочу поблагодарить CALDO за&nbsp;их&nbsp;работу. В&nbsp;моём случае нюанс заключался в&nbsp;том, что у&nbsp;меня стоял радиатор другой фирмы, который 2&nbsp;раза потёк, и&nbsp;я&nbsp;обратился к&nbsp;ребятам. Обговорили с&nbsp;менеджером Артёмом все моменты, и&nbsp;я&nbsp;получил в&nbsp;срок с&nbsp;доставкой радиатор с&nbsp;нужными параметрами, встал 1&nbsp;в&nbsp;1 под размеры подключения. Естественно, пересверлил только настенные крепления. Большое спасибо и&nbsp;успехов в&nbsp;работе!</p>
+              <span class="rev__name">Егор</span>
+              <span class="rev__date">6 февраля</span>
+            </div>
+          </div>
+        </div>
+        <button class="slider__arrow slider__arrow--prev" type="button" aria-label="Предыдущий отзыв"></button>
+        <button class="slider__arrow slider__arrow--next" type="button" aria-label="Следующий отзыв"></button>
+      </div>
+
+      <!-- Кнопки площадок — как на странице отзывов сайта. Ссылки взяты
+           из исходника: rec819904334. ТЗ «сразу ссылки на связь»
+           закрывает блок заявки в конце страницы. -->
+      <div class="rev__places">
+        <a class="btn btn--dark btn--lg" rel="nofollow noopener" target="_blank"
+           href="https://www.avito.ru/brands/i211184993?shopId=1936514">Читать отзывы на Авито</a>
+        <a class="btn btn--ghost btn--lg" rel="nofollow noopener" target="_blank"
+           href="https://yandex.ru/maps/org/caldo/212758115219/reviews/">Читать отзывы на Яндекс.Картах</a>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- ============ ЗАЯВКА ============
+       Блок rec632091629: фотография уходит за левый край, справа
+       надзаголовок, заголовок, строка-пояснение и форма. -->
+  <section class="section section--cta">
+    <div class="cta">
+      <div class="cta__ph" role="img" aria-label="Радиатор CALDO в интерьере"
+           style="background-image: url('https://static.tildacdn.com/tild3530-3330-4736-a161-333134353563/Ronda___2.jpg')"></div>
+
+      <span class="cta__rule"></span>
+      <span class="section__label cta__label">Контакты</span>
+      <h2 class="section__title cta__title">Caldo — тепло, которое вы искали</h2>
+      <p class="cta__text">Отправьте форму, и&nbsp;мы&nbsp;подберём идеальный радиатор&nbsp;— с&nbsp;учётом
+        площади и&nbsp;назначения помещения</p>
+
+      <form class="form cta__form" novalidate>
+        <div class="field">
+          <label class="visually-hidden" for="cta-name">Ваше имя</label>
+          <input id="cta-name" name="name" type="text" autocomplete="name" placeholder="Ваше имя" required>
+        </div>
+        <div class="field">
+          <label class="visually-hidden" for="cta-email">Email</label>
+          <input id="cta-email" name="email" type="email" autocomplete="email" placeholder="Email">
+        </div>
+        <div class="field field--phone">
+          <label class="visually-hidden" for="cta-phone">Телефон</label>
+          <span class="field__code" aria-hidden="true">+7</span>
+          <input id="cta-phone" name="phone" type="tel" autocomplete="tel" placeholder="(000) 000-00-00" required>
+        </div>
+        <label class="consent">
+          <input type="checkbox" name="consent" required>
+          <span>Я соглашаюсь с <a href="#">политикой конфиденциальности</a></span>
+        </label>
+        <button class="btn btn--dark btn--lg" type="submit">Подобрать радиатор</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__top">
+      <div>
+        <div class="footer__logo">Caldo</div>
+        <p>Стальные трубчатые радиаторы<br>от производителя. Гарантия 20 лет.</p>
+      </div>
+      <div class="footer__cols">
+        <div class="footer__col">
+          <h4>Разделы</h4>
+          <ul>
+            <li><a href="index.html">О компании</a></li>
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="partners.html">Сотрудничество</a></li>
+            <li><a href="gallery.html">Фотогалерея</a></li>
+            <li><a href="reviews.html">Отзывы</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Связь</h4>
+          <ul>
+            <li><a href="tel:+78003006152">+7 (800) 300 61 52</a></li>
+            <li><a href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a></li>
+            <li><a href="https://t.me/caldo_studio" rel="noopener">Telegram</a></li>
+            <li><a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a></li>
+            <li><a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 CALDO. Все права защищены</span>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=32"></script>
+</body>
+</html>

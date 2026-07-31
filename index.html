@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CALDO — дизайнерские радиаторы отопления от производителя</title>
+<meta name="description" content="Дизайнерские стальные радиаторы отопления из наличия и под заказ. Напрямую с завода-изготовителя в Ярославле. Гарантия 20 лет, бесплатная доставка по РФ.">
+
+<!-- Tilda Sans — тот же источник, что и на текущем сайте caldo.studio.
+     Подключён неблокирующим способом: если CDN тормозит, страница всё равно
+     рисуется, а на машинах с установленным Tilda Sans шрифт берётся локально. -->
+<link rel="preconnect" href="https://static.tildacdn.com" crossorigin>
+<link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css"></noscript>
+<link rel="stylesheet" href="assets/site.css?v=32">
+</head>
+
+<body>
+<script>
+/* Масштаб макета под ширину окна — то же, что делает модуль ANNEXX на сайте:
+   сетка 1200 растягивается на всё окно. Ниже 1200 масштаб не трогаем,
+   там работают брейкпоинты. */
+(function () {
+  var root = document.documentElement;
+  function fit() {
+    var w = root.clientWidth;
+    root.style.setProperty('--k', w >= 1200 ? (w / 1200).toFixed(4) : '1');
+  }
+  fit();
+  addEventListener('resize', fit, { passive: true });
+})();
+</script>
+
+<header class="header" id="header">
+  <div class="shell header__inner">
+    <a class="logo" href="index.html" aria-label="CALDO — на главную">Caldo</a>
+
+    <nav class="nav" aria-label="Основная навигация">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="index.html" aria-current="page">О компании</a></li>
+    <li class="nav__item"><a class="nav__link" href="catalog.html">Каталог</a></li>
+    <li class="nav__item"><a class="nav__link" href="partners.html">Сотрудничество</a></li>
+    <li class="nav__item"><a class="nav__link" href="gallery.html">Фотогалерея</a></li>
+    <li class="nav__item"><a class="nav__link" href="reviews.html">Отзывы</a></li>
+    <li class="nav__item"><a class="nav__link" href="contacts.html">Контакты</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__aside">
+      <a class="header__phone" href="tel:+78003006152">+7 (800) 300 61 52</a>
+      <a class="btn btn--primary" href="contacts.html">Связаться с нами</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Открыть меню разделов">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" id="menu" data-open="false" aria-label="Разделы сайта">
+  <ul class="overlay__list">
+    <li><a class="overlay__link" href="index.html" aria-current="page">О компании</a></li>
+    <li><a class="overlay__link" href="catalog.html">Каталог</a></li>
+    <li><a class="overlay__link" href="partners.html">Сотрудничество</a></li>
+    <li><a class="overlay__link" href="gallery.html">Фотогалерея</a></li>
+    <li><a class="overlay__link" href="reviews.html">Отзывы</a></li>
+    <li><a class="overlay__link" href="contacts.html">Контакты</a></li>
+  </ul>
+  <div class="overlay__contacts">
+    <a href="tel:+78003006152">+7 (800) 300 61 52</a>
+    <a href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a>
+    <div class="overlay__messengers">
+      <a href="https://t.me/caldo_studio" rel="noopener">Telegram</a>
+      <a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a>
+      <a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a>
+    </div>
+    <a class="btn btn--primary" href="contacts.html">Связаться с нами</a>
+  </div>
+</div>
+
+<main id="top">
+<!-- ============ ПЕРВЫЙ ЭКРАН ============ -->
+  <section class="hero" id="hero">
+    <div class="hero__media" role="img" aria-label="Дизайнерский стальной радиатор CALDO в интерьере"></div>
+    <div class="hero__scrim" aria-hidden="true"></div>
+
+    <div class="shell hero__inner">
+      <div class="hero__content">
+        <span class="eyebrow reveal reveal--1">Ярославль · собственное производство · с 2020 года</span>
+        <h1 class="hero__title reveal reveal--2">Дизайнерские радиаторы отопления</h1>
+        <p class="hero__lead reveal reveal--3">Из наличия и под заказ. Напрямую с завода-изготовителя.</p>
+        <div class="hero__actions reveal reveal--4">
+          <a class="btn btn--light btn--lg" href="contacts.html">Связаться с нами</a>
+          <a class="hero__phone" href="tel:+78003006152">+7 (800) 300 61 52</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ О КОМПАНИИ ============
+       Артборд rec819904307 по координатам оригинала: сетка 1200,
+       высота 911. Добавления по ТЗ идут ниже, отдельными блоками. -->
+
+<!-- ============ О КОМПАНИИ ============
+       Артборд rec819904307 по координатам оригинала: сетка 1200,
+       высота 911. Добавления по ТЗ идут ниже, отдельными блоками. -->
+  <section class="section" id="about">
+    <div class="abx">
+      <div class="abx__ph abx__ph--1" role="img"
+           aria-label="Радиатор CALDO серии Aria в интерьере жилой комнаты"
+           style="background-image: url('https://static.tildacdn.com/tild6531-3336-4562-b737-356231393737/ARIA_1_1.jpg')"></div>
+
+      <span class="abx__rule"></span>
+      <span class="section__label abx__label">О компании</span>
+      <h2 class="section__title abx__title">Объединяем искусство</h2>
+      <p class="section__sub abx__sub">и функцион<em>а</em>льность с 2020 год<em>а</em></p>
+
+      <div class="abx__ph abx__ph--2" role="img"
+           aria-label="Вертикальный радиатор CALDO Aria у окна"
+           style="background-image: url('https://static.tildacdn.com/tild3232-3562-4463-a237-616238326337/ARIA__0000.jpeg')"></div>
+
+      <svg class="abx__arrow abx__arrow--1" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+        <path d="M7 7h10v10M17 7L7 17" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <svg class="abx__arrow abx__arrow--2" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+        <path d="M7 7h10v10M17 7L7 17" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+
+      <p class="abx__p abx__p--1">Изготавливаем стальные радиаторы отопления на собственном
+        производстве и продаём их без наценок от магазина</p>
+      <p class="abx__p abx__p--2">Создаём трубчатые радиаторы из лучшего отечественного сырья,
+        что гарантирует бесперебойное производство вне зависимости от импорта</p>
+
+      <!-- Цифра, линия и подпись собраны в один блок: раньше они лежали
+           отдельными элементами и на узком экране разъезжались — сначала
+           шли обе цифры, потом обе подписи. -->
+      <div class="abx__stat abx__stat--1">
+        <span class="abx__v about__value" data-count="20000">20 000</span>
+        <hr class="abx__hr">
+        <span class="abx__c">радиаторов произвели</span>
+      </div>
+      <div class="abx__stat abx__stat--2">
+        <span class="abx__v about__value" data-count="6500">6 500</span>
+        <hr class="abx__hr">
+        <span class="abx__c">заказов выполнили</span>
+      </div>
+      <div class="abx__stat abx__stat--3">
+        <span class="abx__v about__value" data-count="215">215</span>
+        <hr class="abx__hr">
+        <span class="abx__c">цветов используем в работе</span>
+      </div>
+      <div class="abx__stat abx__stat--4">
+        <span class="abx__v about__value" data-count="50">50</span>
+        <hr class="abx__hr">
+        <span class="abx__c">тонн металла перерабатываем ежемесячно</span>
+      </div>
+    </div>
+
+    <div class="shell">
+      <!-- ═══ ДАЛЬШЕ — ДОБАВЛЕНО ПО ТЗ, раздел 1 «Главная страница (О компании)» ═══
+           «Главное фото/графика с заголовком» и «Дизайнерские радиаторы… (КНОПКА —
+           СВЯЗАТЬСЯ С НАМИ)» закрыты первым экраном. Цифры — выше, с сайта.
+           Ниже закрываются остальные пункты, без повторов уже сказанного. -->
+
+
+
+      <!-- ТЗ: «наши преимущества». Контент — блок rec819904311 сайта, дословно.
+           Композиция та же, что на сайте, но короче: фотографии по краям,
+           посередине линия с маркером и четыре пункта. -->
+      <div class="advs">
+        <span class="rule"></span>
+        <span class="section__label">Преимущества</span>
+        <h3 class="section__title">Согреваем не только продукцией,</h3>
+        <p class="advs__lead">но и заботливым сервисом</p>
+
+        <div class="advs__body">
+          <div class="advs__media advs__media--l">
+            <div class="advs__ph" role="img" aria-label="Радиатор Bordo в интерьере"
+                 style="aspect-ratio: 447/291; background-image: url('https://static.tildacdn.com/tild6532-3335-4834-b564-393137653266/Bordo__2.jpg')"></div>
+            <div class="advs__ph" role="img" aria-label="Радиатор Bordo вертикального расположения"
+                 style="aspect-ratio: 423/330; background-image: url('https://static.tildacdn.com/tild3266-3063-4362-b931-346164663039/BORDO___1.png')"></div>
+          </div>
+
+          <div class="advs__list">
+            <span class="adv__runner" aria-hidden="true"></span>
+            <div class="adv__item">
+              <span class="adv__title">Окрашивание радиаторов в любой цвет — бесплатно</span>
+              <span class="adv__text">Делаем радиаторы даже самых необычных цветов. Кран Маевского
+                и кронштейны идут в комплекте абсолютно бесплатно.</span>
+            </div>
+            <div class="adv__item">
+              <span class="adv__title">Изготавливаем заказ от 14 дней</span>
+              <span class="adv__text">Устанавливаем двухнедельный срок на сборку изделия, часто
+                справляемся быстрее. При заказе 15+ радиаторов срок может увеличиться,
+                но мы предупредим заранее.</span>
+            </div>
+            <div class="adv__item">
+              <span class="adv__title">Даём 20-летнюю гарантию на продукцию</span>
+              <span class="adv__text">Инновационное использование лазерной сварки позволяет
+                выдерживать высокое давление и гидроудары. Подтверждаем качество
+                <a href="#docs">сертификатами</a>.</span>
+            </div>
+            <div class="adv__item">
+              <span class="adv__title">Бесплатная доставка от 80 000 ₽</span>
+              <span class="adv__text">Отправляем продукцию по всей России и странам СНГ бесплатно.
+                Вам нужно только забрать радиатор в отделении транспортной компании.</span>
+            </div>
+          </div>
+
+          <div class="advs__media advs__media--r">
+            <div class="advs__ph" role="img" aria-label="Радиатор Cube"
+                 style="aspect-ratio: 270/365; background-image: url('https://static.tildacdn.com/tild3438-3763-4839-b536-333234663364/Cube__3.jpg')"></div>
+            <div class="advs__ph" role="img" aria-label="Радиатор Ronda"
+                 style="aspect-ratio: 300/360; background-image: url('https://static.tildacdn.com/tild3032-3031-4862-a262-356662666336/Ronda__.jpg')"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ТЗ: «сфера и направление деятельности», кнопка «СВЯЗАТЬСЯ С НАМИ»,
+           ссылки на «О продукции» и «Контакты», гарантия и сертификаты —
+           одним блоком в три колонки, а не тремя кусками подряд. -->
+      <div class="prod" id="docs">
+        <span class="rule"></span>
+
+        <div class="prod__body">
+          <div class="prod__col prod__col--facts">
+            <span class="section__label">О продукции</span>
+            <ul class="prod__facts">
+              <li>4 серии — Bordo, Aria, Ronda, Cube</li>
+              <li>Длина 500–2500 мм, от 2 секций</li>
+              <li>Любой цвет по каталогу RAL</li>
+              <li>Россия и страны СНГ</li>
+            </ul>
+
+            <!-- ТЗ просил ссылку на «Контакты». Ссылка-повтор убрана,
+                 вместо неё сами контакты — коротко -->
+            <dl class="prod__contacts">
+              <dt>Телефон</dt>
+              <dd><a href="tel:+78003006152">+7 (800) 300 61 52</a></dd>
+              <dt>Почта</dt>
+              <dd><a href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a></dd>
+              <dt>Мессенджеры</dt>
+              <dd>
+                <a href="https://t.me/caldo_studio" rel="noopener">Telegram</a> ·
+                <a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a> ·
+                <a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a>
+              </dd>
+              <dt>Производство</dt>
+              <dd>Ярославль, пр-кт Октября, 86А</dd>
+            </dl>
+          </div>
+
+          <!-- Заявка. Поля и стиль — те же, что в форме на странице контактов -->
+          <div class="prod__col prod__col--form">
+            <span class="section__label">Оставить заявку</span>
+            <form class="form" novalidate>
+              <div class="field">
+                <label class="field__label" for="lead-name">Имя <i>*</i></label>
+                <input id="lead-name" name="name" type="text" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label class="field__label" for="lead-phone">Телефон <i>*</i></label>
+                <input id="lead-phone" name="phone" type="tel" autocomplete="tel" required>
+              </div>
+              <div class="field">
+                <label class="field__label" for="lead-email">Почта</label>
+                <input id="lead-email" name="email" type="email" autocomplete="email">
+              </div>
+              <label class="consent">
+                <input type="checkbox" name="consent" required>
+                <span>Соглашаюсь с политикой конфиденциальности и обработкой персональных данных</span>
+              </label>
+              <button class="btn btn--primary btn--lg" type="submit">Оставить заявку</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--steps" id="steps">
+    <!-- ============ ЭТАПЫ РАБОТЫ ============
+         Блок rec819904325: линия 50, надзаголовок 81, заголовок 74/138,
+         подстрока 312, четыре шага двумя парами на 376 и 490,
+         фотография 879/120 размером 341 × 398. Высота 706. -->
+    <div class="steps">
+      <span class="steps__rule"></span>
+      <span class="section__label steps__label">Этапы работы</span>
+      <h2 class="section__title steps__title">Изготавливаем и&nbsp;отправляем заказ</h2>
+      <p class="steps__sub">точно в&nbsp;срок</p>
+
+      <div class="steps__item steps__item--1">
+        <span class="steps__num">1</span>
+        <span class="steps__name">Сделайте заказ</span>
+        <p class="steps__text">Перезвоним вам для&nbsp;консультации по&nbsp;цене и&nbsp;срокам</p>
+      </div>
+      <div class="steps__item steps__item--2">
+        <span class="steps__num">2</span>
+        <span class="steps__name">Оплатите 50% суммы</span>
+        <p class="steps__text">Начнём производство сразу после оплаты</p>
+      </div>
+      <div class="steps__item steps__item--3">
+        <span class="steps__num">3</span>
+        <span class="steps__name">Внесите остаток, когда товар будет готов</span>
+        <p class="steps__text">Свяжемся, чтобы сообщить о&nbsp;готовности радиатора.
+          Вам нужно внести остаток стоимости</p>
+      </div>
+      <div class="steps__item steps__item--4">
+        <span class="steps__num">4</span>
+        <span class="steps__name">Заберите покупку</span>
+        <p class="steps__text">Отправим радиаторы сразу после оплаты.
+          Расходы на&nbsp;доставку берём на&nbsp;себя</p>
+      </div>
+
+      <div class="steps__ph" role="img" aria-label="Радиатор CALDO Ronda"
+           style="background-image: url('https://static.tildacdn.com/tild3961-6535-4633-b937-613463653738/Ronda___2_1.png')"></div>
+    </div>
+
+  </section>
+
+  <section class="section section--deal">
+    <!-- ============ РАБОТАТЬ С НАМИ ВЫГОДНО ============
+         Блок rec819904326: линия 49, надзаголовок 80, заголовок 410/137,
+         фотография 80/285 размером 500 × 416, справа два условия с кнопками.
+         «Сотрудничество» у нас одна страница, поэтому обе ведут на неё. -->
+    <div class="deal">
+      <span class="deal__rule"></span>
+      <span class="section__label deal__label">Дизайнерам, строителям и&nbsp;оптовикам</span>
+      <h2 class="section__title deal__title">Работать с&nbsp;нами выгодно и&nbsp;удобно</h2>
+
+      <div class="deal__ph" role="img" aria-label="Радиатор CALDO Aria в интерьере"
+           style="background-image: url('https://static.tildacdn.com/tild6439-3733-4564-b034-626332636531/Aria__1.jpg')"></div>
+
+      <div class="deal__offer deal__offer--1">
+        <span class="deal__name">Дизайнерам и&nbsp;строителям</span>
+        <a class="btn btn--dark btn--lg" href="partners.html">Узнать подробности условий</a>
+      </div>
+      <div class="deal__offer deal__offer--2">
+        <span class="deal__name">Оптовые продажи от&nbsp;300 000 ₽</span>
+        <a class="btn btn--dark btn--lg" href="partners.html">Узнать подробности условий</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__top">
+      <div>
+        <div class="footer__logo">Caldo</div>
+        <p>Стальные трубчатые радиаторы<br>от производителя. Гарантия 20 лет.</p>
+      </div>
+      <div class="footer__cols">
+        <div class="footer__col">
+          <h4>Разделы</h4>
+          <ul>
+            <li><a href="index.html">О компании</a></li>
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="partners.html">Сотрудничество</a></li>
+            <li><a href="gallery.html">Фотогалерея</a></li>
+            <li><a href="reviews.html">Отзывы</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Связь</h4>
+          <ul>
+            <li><a href="tel:+78003006152">+7 (800) 300 61 52</a></li>
+            <li><a href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a></li>
+            <li><a href="https://t.me/caldo_studio" rel="noopener">Telegram</a></li>
+            <li><a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a></li>
+            <li><a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 CALDO. Все права защищены</span>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=32"></script>
+</body>
+</html>

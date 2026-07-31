@@ -1,0 +1,1533 @@
+/* ============================================================
+   CALDO · прототип по ТЗ
+   Токены — из дизайн-системы CALDO (31 переменная, см. AUDIT_LEGACY.md)
+   ============================================================ */
+
+/* Alethia Next — лицензионный веб-шрифт из поставки клиента.
+   Лицензия: prototype/fonts/Web Font EULA 1.7.1.txt */
+@font-face {
+  font-family: 'Alethia Next Web';
+  src: url('fonts/alethianext-light-webfont.woff2') format('woff2'),
+       url('fonts/alethianext-light-webfont.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+/* Курсив: им набраны буквы «а» в «функционАльность» и «годА» — на сайте
+   это отдельный шрифтовой файл, а не наклон, сделанный браузером */
+@font-face {
+  font-family: 'Alethia Next Web';
+  src: url('fonts/alethianext-lightitalic-webfont.woff2') format('woff2'),
+       url('fonts/alethianext-lightitalic-webfont.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* --- цвет: палитра ДС --- */
+  --primary:      #1f1f1f;
+  --dark:         #1b1919;
+  --dark-hover:   #363636;
+  --mid:          #3b3b3b;
+  --muted:        #666666;
+  --disabled:     #8c8c8c;
+  --border:       #ded7cb;   /* тёплая граница вместо нейтральной */
+  /* ТЗ: «тёплый оттенок бежеватый, но тогда ВЕЗДЕ, на всех блоках».
+     На сайте бежа нет: 30 блоков залиты #f7f9f8, а body — чистый #ffffff,
+     он и просвечивает «белыми участками». Здесь один фон на всю страницу. */
+  --bg-light:     #f5f2ec;   /* основной беж */
+  --bg-subtle:    #efeade;   /* беж на полтона глубже — подложки */
+  --card:         #fbf9f5;   /* поверхности: карточки, поля, селекты */
+  --white:        #ffffff;
+  --accent:       #bb0914;   /* фирменный красный ДС */
+  --accent-dark:  #8f0710;
+
+  /* --- шкала отступов ДС --- */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 20px;
+  --s6: 24px; --s8: 30px; --s10: 40px; --s12: 50px;
+  --s16: 60px; --s20: 80px; --s24: 100px;
+
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-full: 9999px;
+
+  --shell: 1200px;              /* ДС: контейнер 1200 */
+  --gutter: var(--s20);         /* ДС: поле слева 80 */
+
+
+  /* Рёбра: шаг вертикальных волосков = ритм секций радиатора */
+  --rib-color: rgba(31, 31, 31, .07);
+
+  /* Главная картинка. Заменяется одной строкой, когда заказчик пришлёт 3D. */
+  /* Снимок первого экрана заменён по ТЗ: радиатор виден чётко */
+  --hero-image: url('img/hero-kitchen.png');   /* путь считается от site.css */
+
+  --font-display: 'Alethia Next Web', 'Alethia Next', 'AlethiaNext', Georgia, serif;
+  --font-body: 'TildaSans', 'Tilda Sans', -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --header-h: 88px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ============================================================
+   Масштаб макета. На сайте стоит модуль ANNEXX: макет нарисован на
+   сетке 1200 и растягивается на всю ширину окна — при окне 1424
+   всё крупнее в 1,19 раза. Без этого прототип выглядит у́же оригинала.
+   Коэффициент считает скрипт внизу страницы.
+   ============================================================ */
+html { overflow-y: scroll; }   /* иначе появление полосы меняет ширину и масштаб пляшет */
+body { zoom: var(--k, 1); }
+
+body {
+  margin: 0;
+  background: var(--bg-light);
+  color: var(--primary);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 14px;    /* ДС: основной текст 14 / 18 */
+  line-height: 1.3;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ============================================================
+   Шапка
+   Решение по навигации: >=960 — полоса, <960 — бургер и оверлей.
+   Представления взаимоисключающие, дублирования нет.
+   ============================================================ */
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  transition: background-color .3s ease, border-color .3s ease;
+  border-bottom: 1px solid transparent;
+}
+.header--solid {
+  background: rgba(245, 242, 236, .92);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--border);
+}
+.header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--s8);
+  width: 100%;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 20px; line-height: 1;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--white);
+  transition: color .3s ease;
+  flex: 0 0 auto;
+}
+.header--solid .logo { color: var(--primary); }
+
+.nav { margin-inline: auto; }
+.nav__list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav__link {
+  display: block;
+  padding: var(--s2) var(--s5);
+  font-size: 14px;
+  line-height: 1.3;
+  white-space: nowrap;           /* «О компании» ломалось на две строки */
+  text-decoration: none;
+  color: rgba(255,255,255,.88);
+  transition: color .2s ease;
+}
+.header--solid .nav__link { color: var(--muted); }
+.nav__link:hover { color: var(--white); }
+.header--solid .nav__link:hover { color: var(--accent); }
+
+.header__aside {
+  display: flex;
+  align-items: center;
+  gap: var(--s5);
+  flex: 0 0 auto;
+}
+.header__phone {
+  font-size: 14px;
+  letter-spacing: .01em;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--white);
+  transition: color .2s ease;
+}
+.header--solid .header__phone { color: var(--primary); }
+.header__phone:hover { color: var(--accent); }
+
+/* Кнопки */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s2);
+  padding: 16px var(--s6);
+  line-height: 18px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-none);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 14px;   /* ДС: кнопка TildaSans 14 */
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.btn--primary { background: var(--accent); color: var(--white); }
+.btn--primary:hover { background: var(--accent-dark); }
+.btn--light { background: var(--card); color: var(--primary); }
+/* Было: на ховере кнопка становилась почти чёрной и растворялась
+   в тёмном первом экране. Красный виден на любой подложке. */
+.btn--light:hover { background: var(--accent); color: var(--white); }
+.btn--dark { background: var(--primary); color: var(--card); }
+.btn--dark:hover { background: #363636; color: var(--white); }
+.btn--ghost { background: transparent; color: var(--primary); border-color: var(--primary); }
+.btn--ghost:hover { background: var(--primary); color: var(--white); }
+.btn--lg { padding: 20px var(--s10); font-size: 14px; }
+
+/* Бургер */
+.burger {
+  display: none;
+  width: 44px; height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  position: relative;
+}
+.burger span {
+  position: absolute;
+  left: 10px;
+  width: 24px; height: 1px;
+  background: var(--white);
+  transition: transform .3s ease, opacity .2s ease, background-color .3s ease;
+}
+.header--solid .burger span { background: var(--primary); }
+.burger span:nth-child(1) { top: 17px; }
+.burger span:nth-child(2) { top: 22px; }
+.burger span:nth-child(3) { top: 27px; }
+.burger[aria-expanded="true"] span { background: var(--primary); }
+.burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+/* Поле в 80 держим только на широком экране — ДС даёт его для ≥1200 */
+@media (max-width: 1199px) { :root { --gutter: var(--s10); } }
+
+@media (max-width: 959px) {
+  :root { --header-h: 72px; --gutter: var(--s5); }
+  .nav, .header__aside .header__phone, .header__aside .btn { display: none; }
+  /* бургер лежит внутри header__aside, поэтому вправо прижимаем сам
+     блок: без этого он вставал вплотную к логотипу */
+  .header__aside { margin-left: auto; }
+  .burger { display: block; }
+}
+
+/* Мобильный оверлей — то же меню, второе состояние */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--bg-light);
+  padding: calc(var(--header-h) + var(--s8)) var(--s5) var(--s10);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s6);
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform .35s cubic-bezier(.4, 0, .2, 1);
+}
+.overlay[data-open="true"] { transform: translateX(0); }
+.overlay__list { list-style: none; margin: 0; padding: 0; }
+.overlay__list li + li { border-top: 1px solid var(--border); }
+.overlay__link {
+  display: block;
+  padding: var(--s4) 0;
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.overlay__contacts { display: flex; flex-direction: column; gap: var(--s3); margin-top: auto; }
+.overlay__contacts a { text-decoration: none; font-size: 16px; }
+.overlay__messengers { display: flex; gap: var(--s4); flex-wrap: wrap; }
+.overlay__messengers a { font-size: 14px; color: var(--muted); }
+@media (min-width: 960px) { .overlay { display: none; } }
+
+/* ============================================================
+   Первый экран
+   ТЗ: картинка по длине на страницу, фокус на радиатор,
+   заголовок с кнопкой действия, подложка под текстом.
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: calc(100svh / var(--k, 1));
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  color: var(--white);
+}
+.hero__media {
+  position: absolute;
+  inset: 0;
+  background-image: var(--hero-image);
+  background-size: cover;
+  background-position: 62% center;   /* кадр держит радиатор в правой трети */
+  transform: scale(1.06);
+  animation: heroZoom 1.6s cubic-bezier(.22, 1, .36, 1) forwards;
+}
+@keyframes heroZoom { to { transform: scale(1); } }
+
+/* Подложка: слева плотнее — там текст. Требование ТЗ про читаемость. */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    /* слева, под текстом, интерьер уходит в тень; справа радиатор остаётся
+       в фокусе — затемнение туда почти не доходит */
+    linear-gradient(96deg, rgba(20,19,19,.88) 0%, rgba(20,19,19,.78) 30%, rgba(20,19,19,.42) 52%, rgba(20,19,19,.06) 68%, rgba(20,19,19,0) 82%),
+    linear-gradient(180deg, rgba(20,19,19,.45) 0%, rgba(20,19,19,0) 26%, rgba(20,19,19,0) 68%, rgba(20,19,19,.4) 100%);
+}
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-top: calc(var(--header-h) + var(--s16));
+  padding-bottom: var(--s10);
+}
+.hero__content { max-width: 780px; }
+
+.eyebrow {
+  display: block;
+  font-size: 14px; line-height: 17px;    /* ДС: надзаголовок */
+  color: rgba(255,255,255,.72);
+  margin: 0 0 var(--s6);
+}
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 104px;
+  line-height: .96;
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  margin: 0 0 var(--s6);
+  text-shadow: 0 2px 40px rgba(27,25,25,.35);
+}
+.hero__lead {
+  font-size: 20px; line-height: 18px;    /* ДС: подзаголовок 20 / 18 */
+  color: rgba(255,255,255,.9);
+  max-width: none;
+  margin: 0 0 var(--s10);
+}
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s6);
+  flex-wrap: wrap;
+}
+.hero__phone {
+  font-size: 14px; line-height: 18px;
+  text-decoration: none;
+  color: var(--white);
+  border-bottom: 1px solid rgba(255,255,255,.35);
+  padding-bottom: 2px;
+  transition: border-color .2s ease;
+}
+.hero__phone:hover { border-bottom-color: var(--white); }
+
+/* Появление первого экрана */
+.reveal { opacity: 0; transform: translateY(18px); animation: reveal .8s cubic-bezier(.22,1,.36,1) forwards; }
+.reveal--1 { animation-delay: .15s; }
+.reveal--2 { animation-delay: .28s; }
+.reveal--3 { animation-delay: .40s; }
+.reveal--4 { animation-delay: .52s; }
+@keyframes reveal { to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; animation: none; }
+  .hero__media { transform: none; animation: none; }
+  .overlay { transition: none; }
+}
+
+/* ============================================================
+   Секции-заглушки под остальные разделы ТЗ
+   ============================================================ */
+.section {
+  position: relative;
+  z-index: 2;
+  padding-block: 50px 100px;    /* ДС: линия-разделитель на 50 от верха блока */
+}
+/* Разделитель над блоком: короткая линия ~700, а не полоса во всю ширину */
+.rule, .section > .shell::before {
+  content: "";
+  display: block; height: 1px;
+  width: calc(100% + var(--gutter));   /* от поля до края окна, как в оригинале */
+  background: var(--primary); opacity: .1;
+  margin-bottom: 31px;          /* ДС: надзаголовок на 81 */
+}
+#about > .shell::before { content: none; }
+#about { padding-top: 0; }   /* артборд сам держит вертикаль от нуля */
+
+.section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s6);
+  flex-wrap: wrap;
+  margin-bottom: var(--s10);
+}
+/* ДС: надзаголовок раздела — TildaSans 14/17, opacity .45, обычный регистр */
+.section__label {
+  display: block;
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--primary);
+  opacity: .45;
+}
+.section__title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 60px;                       /* ДС: 60 / 40 / 40 / 28 */
+  line-height: .9;
+  text-transform: uppercase;
+  max-width: 700px;             /* ДС: перенос как в оригинале */
+  margin: var(--s10) 0 0;       /* ДС: надзаголовок 81 → H2 138 */
+  flex: 1 1 100%;
+}
+.section__sub {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 20px;                       /* ДС: 20 / 18 / 18 / 16 */
+  line-height: .9;
+  text-transform: uppercase;
+  max-width: 700px;
+  margin: 10px 0 var(--s8);     /* ДС: H2 246 → подзаголовок 256 */
+}
+.section__note { max-width: 62ch; color: var(--muted); font-size: 14px; line-height: 1.3; margin: 0 0 var(--s8); }
+
+
+/* ============================================================
+   О компании — артборд rec819904307 по координатам сетки 1200.
+   Замерено с живого сайта: высота блока 911, фото 80/29 и 780/312,
+   линия 416/40, надзаголовок 81, H2 138 шириной 580, подзаголовок 256,
+   стрелки 409, абзацы 443, цифры 548 и 700, линии 612 и 764.
+   ============================================================ */
+.abx { position: relative; width: 1200px; height: 911px; margin-inline: auto; overflow: hidden; }
+.abx > * { position: absolute; margin: 0; }
+
+.abx__ph { background-size: cover; background-position: center; }
+.abx__ph--1 { left: 80px;  top: 29px;  width: 270px; height: 360px; }
+.abx__ph--2 { left: 780px; top: 312px; width: 342px; height: 410px; }
+
+.abx__rule  { left: 416px; top: 40px;  width: 1200px; height: 1px; background: var(--primary); opacity: .1; }
+.abx__label { left: 416px; top: 81px;  width: 300px; }
+.abx__title { left: 410px; top: 138px; width: 580px; }
+.abx__sub   { left: 414px; top: 256px; width: 430px; }
+.abx__sub em { font-style: italic; }
+
+.abx__arrow { width: 22px; height: 22px; color: var(--primary); top: 409px; }
+.abx__arrow--1 { left: 75px; }
+.abx__arrow--2 { left: 411px; }
+
+.abx__p { top: 443px; font-size: 14px; line-height: 18px; }
+.abx__p--1 { left: 80px;  width: 258px; }
+.abx__p--2 { left: 416px; width: 298px; }
+
+/* Пара «цифра — линия — подпись». Координаты из артборда: 548 и 700
+   по вертикали, 77 и 412 по горизонтали. */
+.abx__stat { display: grid; gap: 0; align-content: start; width: 260px; }
+.abx__stat--1 { left: 77px;  top: 548px; }
+.abx__stat--2 { left: 412px; top: 548px; }
+.abx__stat--3 { left: 76px;  top: 700px; }
+.abx__stat--4 { left: 412px; top: 700px; }
+
+.abx__v {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 60px; line-height: 54px;
+  font-variant-numeric: tabular-nums;
+}
+
+.abx__stat .abx__hr { position: static; width: 250px; margin: var(--s5) 0 var(--s3); }
+.abx__hr { width: 250px; height: 1px; border: 0; background: var(--primary); opacity: .1; }
+
+.abx__c { font-size: 14px; line-height: 18px; }
+
+/* Ниже 1200 артборд разворачивается в поток.
+   Фотографии уходят вниз, под цифры: на узком экране снимок над
+   заголовком висел сам по себе — непонятно, к какому блоку он
+   относится. В оригинале мобильной версии фото тоже идёт после цифр,
+   как иллюстрация к уже прочитанному. */
+@media (max-width: 1199px) {
+  .abx {
+    width: auto; height: auto; padding-inline: var(--gutter);
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s8) var(--s10);
+    align-items: start;
+  }
+  .abx > * { position: static !important; width: auto !important; }
+  .abx__rule  { order: 1; grid-column: 1 / span 2; }
+  .abx__label { order: 2; grid-column: 1 / span 2; }
+  .abx__title { order: 3; grid-column: 1 / span 2; }
+  .abx__sub   { order: 4; grid-column: 1 / span 2; }
+  .abx__p     { order: 5; }
+  .abx__stat  { order: 6; }
+  /* Вертикальный кадр 3:4 занимал почти весь экран телефона */
+  .abx__ph { order: 7; height: auto !important; aspect-ratio: 4 / 3; }
+  .abx__arrow { display: none; }
+  .abx__stat .abx__hr { width: 100%; }
+}
+@media (max-width: 639px) {
+  .abx { grid-template-columns: 1fr; }
+  .abx > * { grid-column: 1; }
+}
+
+/* ============================================================
+   Преимущества — композиция сайта, но короче оригинала:
+   свой разделитель и заголовок, вертикальная линия с красным
+   маркером посередине, пункты справа от неё, фотографии по краям.
+   Кегли пунктов — как в оригинале: 16 / 21 капсом и 14 / 18.
+   ============================================================ */
+.advs { margin-top: var(--s24); }
+.advs__lead {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 18px;    /* ДС: подзаголовок */
+  text-transform: uppercase;
+  max-width: 700px;
+  margin: 10px 0 0;
+}
+.advs__body {
+  display: grid;
+  grid-template-columns: 340px 1fr 300px;
+  column-gap: var(--s12);
+  align-items: start;
+  margin-top: var(--s16);
+}
+.advs__media { display: grid; gap: var(--s12); }
+.advs__media--r { padding-top: var(--s24); }
+.advs__ph { background-size: cover; background-position: center; }
+
+/* Лента пунктов: линия слева, маркер едет по ней при скролле */
+.advs__list {
+  position: relative;
+  border-left: 1px solid var(--border);
+  padding-left: var(--s10);
+  display: grid; gap: var(--s16);
+}
+.advs__list .adv__runner { position: absolute; left: -7px; top: 0; }
+
+/* ============================================================
+   О продукции — один блок вместо трёх кусков вразброс.
+   Три колонки сетки 1200: факты · гарантия · сертификат.
+   Гарантия набрана тем же приёмом, что цифры «О компании»
+   (ui/counter из UI Kit: Alethia 60), поэтому блок читается
+   как часть страницы, а не как вставка.
+   ============================================================ */
+.prod { margin-top: var(--s24); }
+.prod__body {
+  display: grid; grid-template-columns: 336px 1fr;
+  column-gap: 0; align-items: start;
+  margin-top: var(--s8);
+}
+.prod__col { display: grid; align-content: start; }
+.prod__col--facts { width: 300px; }
+.prod__col--term  { width: 300px; }
+
+.prod__facts {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: var(--s4);
+  font-size: 14px; line-height: 18px;
+}
+.prod__facts li { position: relative; padding-left: var(--s4); }
+.prod__facts li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+
+/* Контакты коротко — вместо ссылки-повтора «Контакты» */
+.prod__contacts {
+  margin: var(--s10) 0 0;
+  display: grid; grid-template-columns: 120px 1fr; gap: var(--s3) var(--s5);
+  font-size: 14px; line-height: 18px;
+}
+.prod__contacts dt { color: var(--muted); }
+.prod__contacts dd { margin: 0; }
+.prod__contacts a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--border); }
+.prod__contacts a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* Заявка справа от фактов. Поля те же, что в форме контактов */
+.prod__col--form { width: 460px; }
+.prod__col--form .form { max-width: none; }
+/* Надзаголовок — первая строка каждой колонки, поэтому «О продукции»
+   и «Оставить заявку» стоят на одной линии */
+.prod__col > .section__label { display: block; margin-bottom: var(--s8); }
+
+@media (max-width: 1199px) {
+  .prod__body { grid-template-columns: 1fr 1fr; row-gap: var(--s12); column-gap: var(--s10); }
+  .prod__col--facts, .prod__col--form { width: auto; }
+}
+@media (max-width: 639px) {
+  .prod__body { grid-template-columns: 1fr; }
+}
+
+/* Ниже 1200 фотографии и пункты чередуются — фото, пункт, фото, пункт,
+   как в мобильной версии сайта. Раньше все четыре снимка стояли
+   отдельными пачками до и после текста и ни к чему не относились.
+   display: contents вынимает фото и пункты из своих контейнеров,
+   и они становятся соседями в одной колонке. */
+@media (max-width: 1199px) {
+  /* align-items из базового правила — start; во флексе это схлопнуло бы
+     фото по ширине до нуля, а с ним и высоту по aspect-ratio */
+  .advs__body { display: flex; flex-direction: column; gap: var(--s10); align-items: stretch; }
+  .advs__media, .advs__list { display: contents; }
+  .advs__list .adv__runner { display: none; }   /* бегунок живёт на линии, а линии тут нет */
+  .advs__media--r { padding-top: 0; }
+  .advs__ph { aspect-ratio: 4 / 3 !important; }
+
+  .advs__media--l .advs__ph:nth-of-type(1) { order: 1; }
+  .advs__list .adv__item:nth-of-type(1)    { order: 2; }
+  .advs__media--l .advs__ph:nth-of-type(2) { order: 3; }
+  .advs__list .adv__item:nth-of-type(2)    { order: 4; }
+  .advs__media--r .advs__ph:nth-of-type(1) { order: 5; }
+  .advs__list .adv__item:nth-of-type(3)    { order: 6; }
+  .advs__media--r .advs__ph:nth-of-type(2) { order: 7; }
+  .advs__list .adv__item:nth-of-type(4)    { order: 8; }
+
+  .prod__body { grid-template-columns: 1fr; row-gap: var(--s10); }
+}
+@media (max-width: 639px) {
+  .prod__facts, .docs__row { grid-template-columns: 1fr; }
+}
+
+/* Преимущества — композиция блока rec819904311: фотоколлаж по краям,
+   в центре вертикальная линия с красным маркером и четыре пункта */
+.adv__ph { background-size: cover; background-position: center; }
+.adv__list { position: relative; }
+/* Красный маркер едет по линии при скролле — как в оригинале */
+.adv__runner {
+  position: absolute;
+  left: calc(-1 * var(--s8) - 7px + var(--s8) - 32px);
+  left: -7px;
+  top: 0;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: var(--accent);
+  will-change: transform;
+}
+.adv__item {
+  position: relative;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.22, 1, .36, 1);
+}
+.adv__item.is-in { opacity: 1; transform: none; }
+.adv__ph { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .adv__item { opacity: 1; transform: none; transition: none; }
+  .adv__runner { display: none; }
+}
+.adv__title {
+  display: block;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 16px; line-height: 21px;    /* ДС: 16 / 21 */
+  text-transform: uppercase;
+  margin-bottom: var(--s3);
+}
+.adv__text { display: block; font-size: 14px; line-height: 18px; color: var(--muted); }
+.adv__text a { color: var(--accent); }
+
+@media (max-width: 959px) {
+  .adv { grid-template-columns: 1fr 1fr; column-gap: var(--s6); row-gap: var(--s10); }
+  .adv__media { grid-template-columns: 1fr 1fr; gap: var(--s4); grid-column: 1 / span 2; margin-top: 0; }
+  .adv__media--l { order: 1; }
+  .adv__list { order: 2; grid-column: 1 / span 2; margin-top: 0; gap: var(--s12); }
+  .adv__media--r { order: 3; }
+}
+
+/* Добавлено по ТЗ — в оригинале в блоке нет ни кнопки, ни ссылок */
+.about__actions {
+  display: flex; align-items: center; gap: var(--s6); flex-wrap: wrap;
+  margin-top: var(--s16); padding-top: var(--s8);
+  border-top: 1px solid var(--border);
+}
+.about__link { font-size: 14px; text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; }
+.about__link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.about__docs { margin-top: var(--s10); max-width: 60ch; }
+.about__docs h3 {
+  font-size: 14px; line-height: 17px;    /* ДС: надзаголовок */
+  color: var(--disabled); font-weight: 300; margin: 0 0 var(--s3);
+}
+.about__docs p { margin: 0 0 var(--s4); color: var(--muted); }
+
+/* Между 960 и 1199 колонки становятся тянущимися: фиксированные 336/364/342
+   в контейнер уже не помещаются */
+@media (max-width: 1199px) {
+  .about { grid-template-columns: 1fr 1fr 300px; column-gap: var(--s8); }
+  .about__photo--1 { width: auto; }
+  .rule, .section > .shell::before { width: 100%; }
+}
+
+@media (max-width: 959px) {
+  .about { grid-template-columns: 1fr 1fr; column-gap: var(--s10); row-gap: var(--s8); }
+  .about__photo--1 { grid-column: 1 / span 2; aspect-ratio: 16 / 9; }
+  .about__head { grid-column: 1 / span 2; grid-row: 2; }
+  .about__col--1 { grid-row: 3; }
+  .about__col--2 { grid-row: 3; }
+  .about__photo--2 { grid-column: 1 / span 2; grid-row: 4; aspect-ratio: 16 / 9; }
+  .about__fig--1, .about__fig--2 { grid-row: 5; }
+  .about__fig--3, .about__fig--4 { grid-row: 6; }
+}
+@media (max-width: 479px) {
+  .about { grid-template-columns: 1fr; }
+  .about__photo--1, .about__head, .about__photo--2 { grid-column: 1; }
+  .about__col--1, .about__col--2,
+  .about__fig--1, .about__fig--2, .about__fig--3, .about__fig--4 { grid-column: 1; grid-row: auto; }
+}
+
+
+/* Кегли по брейкпоинтам — ДС. Раньше это делал clamp, но под масштабом
+   макета vw-единицы считаются дважды, поэтому значения заданы явно. */
+@media (max-width: 1199px) {
+  .section__title, .about__value { font-size: 40px; line-height: 36px; }
+  .section__sub, .about__subtitle { font-size: 18px; line-height: 16px; }
+  .hero__title { font-size: clamp(40px, 7.2vw, 104px); }
+}
+@media (max-width: 639px) {
+  .section__title, .about__value { font-size: 28px; line-height: 25px; }
+  .section__sub, .about__subtitle { font-size: 16px; line-height: 14px; }
+}
+
+/* ============================================================
+   Линейки — переделка блоков rec819904313 / rec819904314 / t744 / t030
+   ============================================================ */
+.tabs {
+  display: flex; flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  margin: var(--s10) 0 var(--s10);
+}
+.tab {
+  appearance: none; background: none; cursor: pointer;
+  border: 0; border-bottom: 1px solid transparent; margin-bottom: -1px;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 16px; line-height: 21px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted);
+  padding: var(--s4) var(--s10) var(--s4) 0;
+  transition: color .2s ease, border-color .2s ease;
+}
+.tab + .tab { padding-left: var(--s10); }
+.tab:hover { color: var(--primary); }
+.tab[aria-selected="true"] { color: var(--primary); border-bottom-color: var(--primary); }
+
+.product { display: grid; grid-template-columns: 2fr 1fr; gap: var(--s12); align-items: start; }
+.product__photo {
+  aspect-ratio: 4 / 3;
+  background-size: cover; background-position: center;
+  background-color: var(--bg-subtle);
+}
+.product__thumbs { display: flex; gap: var(--s2); margin-top: var(--s2); }
+.product__thumb {
+  width: 92px; aspect-ratio: 1;
+  background-size: cover; background-position: center;
+  cursor: pointer; opacity: .55;
+  border: 0; padding: 0;
+  transition: opacity .2s ease, outline-color .2s ease;
+  outline: 1px solid transparent;
+}
+.product__thumb:hover { opacity: .85; }
+.product__thumb.is-on { opacity: 1; outline-color: var(--primary); }
+
+.product__name {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 18px;    /* ДС: подзаголовок */
+  text-transform: uppercase; margin: 0;
+}
+.product__sku { font-size: 14px; color: var(--muted); margin-top: var(--s2); }
+.product__price {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 18px; font-variant-numeric: tabular-nums;
+  color: var(--accent); margin-top: var(--s5);
+}
+.product__pricenote { font-size: 14px; color: var(--muted); margin-top: var(--s2); }
+
+.opts { display: grid; gap: var(--s4); margin-top: var(--s6); }
+.opt { display: grid; gap: var(--s1); }
+.opt > span { font-size: 14px; color: var(--muted); }
+.opt select {
+  height: 46px; padding: 0 var(--s3);
+  border: 1px solid var(--border); border-radius: var(--radius-none);
+  background: var(--card); color: var(--primary);
+  font-family: var(--font-body); font-weight: 300; font-size: 14px; line-height: 18px;
+}
+.opt select:focus { border-color: var(--primary); outline: none; }
+
+.product__result {
+  margin-top: var(--s5); padding: var(--s4) 0;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.product__cta { margin-top: var(--s6); width: 100%; }
+.product__hint { font-size: 14px; color: var(--muted); margin: var(--s3) 0 0; }
+
+.product__desc { margin-top: var(--s10); max-width: 78ch; color: var(--muted); }
+.product__desc b { color: var(--primary); font-weight: 300; }
+/* Параметры серии: подпись полужирная, значение обычным — как в оригинале */
+.params { display: grid; gap: var(--s1); margin-top: var(--s6); font-size: 14px; line-height: 18px; }
+.params p { margin: 0; }
+.params b { font-weight: 600; }
+
+/* Примечания под параметрами */
+.notes { display: grid; gap: var(--s3); margin-top: var(--s6); font-size: 14px; line-height: 18px; }
+.notes p { margin: 0; }
+
+
+.stub {
+  border: 1px dashed var(--border);
+  padding: var(--s10);
+  color: var(--disabled);
+  font-size: 14px;
+}
+
+.rating { display: flex; align-items: baseline; gap: var(--s4); margin-bottom: var(--s6); }
+.rating__score { font-family: var(--font-display); font-size: 60px; line-height: .9; }
+.rating__meta { color: var(--muted); font-size: 14px; }
+.sources { display: flex; gap: var(--s6); flex-wrap: wrap; margin-bottom: var(--s8); }
+.sources a { font-size: 14px; }
+
+/* Форма */
+.form { display: grid; gap: var(--s4); max-width: 460px; }
+.field { display: flex; flex-direction: column; gap: var(--s1); }
+.field__label { font-size: 14px; color: var(--muted); }
+.field__label i { font-style: normal; color: var(--accent); }
+.field input {
+  height: 52px;
+  padding: 0 var(--s4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-none);
+  background: var(--card);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 16px;
+  color: var(--primary);
+}
+.field input:focus { border-color: var(--primary); outline: none; }
+.consent { display: flex; gap: var(--s3); align-items: flex-start; font-size: 14px; color: var(--muted); }
+.consent input { margin-top: 3px; }
+
+.contacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s16); }
+@media (max-width: 959px) { .contacts-grid { grid-template-columns: 1fr; gap: var(--s10); } }
+.contact-block + .contact-block { margin-top: var(--s8); }
+.contact-block h3 {
+  font-size: 14px; line-height: 17px;    /* ДС: надзаголовок */
+  color: var(--disabled); margin: 0 0 var(--s2); font-weight: 300;
+}
+.contact-block p, .contact-block a { margin: 0; font-size: 14px; text-decoration: none; }
+.contact-block a:hover { color: var(--accent); }
+
+/* Подвал */
+.footer {
+  position: relative;
+  z-index: 2;
+  background: var(--dark);
+  color: rgba(255,255,255,.7);
+  padding-block: var(--s16) var(--s10);
+  font-size: 14px;
+}
+.footer a { text-decoration: none; }
+.footer a:hover { color: var(--white); }
+.footer__top { display: flex; justify-content: space-between; gap: var(--s10); flex-wrap: wrap; margin-bottom: var(--s12); }
+.footer__logo { font-family: var(--font-display); font-size: 40px; line-height: .9; letter-spacing: .16em; color: var(--white); text-transform: uppercase; }
+.footer__cols { display: flex; gap: var(--s16); flex-wrap: wrap; }
+.footer__col h4 { font-size: 14px; line-height: 17px;    /* ДС: надзаголовок */ color: rgba(255,255,255,.45); margin: 0 0 var(--s3); font-weight: 300; }
+.footer__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s2); }
+.footer__bottom { display: flex; justify-content: space-between; gap: var(--s6); flex-wrap: wrap; padding-top: var(--s6); border-top: 1px solid rgba(255,255,255,.14); font-size: 14px; color: rgba(255,255,255,.45); }
+.footnote { font-size: 12px; line-height: 18px; color: rgba(255,255,255,.35); margin-top: var(--s4); max-width: 60ch; }
+
+
+/* ============================================================
+   Многостраничник: на внутренних страницах шапка непрозрачная
+   сразу, а содержимое начинается под ней.
+   ============================================================ */
+.page { padding-top: var(--header-h); }
+.nav__link[aria-current="page"] { color: var(--accent); }
+.header--solid .nav__link[aria-current="page"] { color: var(--accent); }
+.overlay__link[aria-current="page"] { color: var(--accent); }
+
+/* На внутренних страницах первая секция идёт сразу под шапкой —
+   разделитель над ней ничего не отделяет */
+.page > .section:first-child > .shell::before { content: none; }
+.page > .section:first-child { padding-top: 30px; }
+
+/* ============================================================
+   Контакты в конце страницы — артборд rec632091629 со страницы
+   «Оптовикам»: сетка 1200, фотография уходит за левый край.
+   ============================================================ */
+.section--cta { padding-block: 0; }
+.cta {
+  position: relative;
+  width: 1200px; height: 820px;
+  margin-inline: auto;
+  overflow: hidden;
+}
+.cta > * { position: absolute; margin: 0; }
+.cta__ph {
+  left: 80px; top: 138px; width: 300px; height: 560px;
+  background-size: cover;
+  background-position: 58% center;   /* кадр по радиатору */
+}
+.cta__rule  { left: 416px; top: 50px; width: 800px; height: 1px;
+  background: var(--primary); opacity: .1; }
+.cta__label { left: 416px; top: 81px; width: 216px; }
+.cta__title { left: 410px; top: 138px; width: 611px; }
+.cta__text  { left: 417px; top: 312px; width: 500px;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 24px; }
+.cta__form  { left: 417px; top: 400px; width: 442px; max-width: none; }
+
+@media (max-width: 1199px) {
+  .section--cta { padding-block: 50px 100px; }
+  .cta {
+    width: auto; height: auto; padding-inline: var(--gutter);
+    display: grid; gap: var(--s8);
+  }
+  .cta > * { position: static !important; width: auto !important; }
+  .cta__ph { height: 320px !important; }
+  .cta__form { max-width: 460px; }
+}
+
+/* ============================================================
+   Вознаграждения — артборд rec632151438 со страницы «Дизайнерам».
+   Сетка 1200, высота 1335. Три уровня цифрами по 150 px,
+   ниже тёмная плашка с формой поверх фотографии.
+   ============================================================ */
+.section--rew { padding-block: 0; }
+.rew {
+  position: relative;
+  width: 1200px; height: 760px;   /* форма убрана, остались уровни */
+  margin-inline: auto;
+  overflow: hidden;
+}
+.rew > * { position: absolute; margin: 0; }
+
+.rew__rule  { left: 80px; top: 100px; width: 1200px; height: 1px;
+  background: var(--primary); opacity: .1; }
+.rew__label { left: 80px; top: 131px; width: 241px; }
+.rew__title { left: 75px; top: 188px; width: 855px; }
+.rew__sub {
+  left: 79px; top: 308px; width: 564px;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 24px; text-transform: uppercase;
+}
+
+/* Уровни: три колонки потоком на отметке 399, ширина по сетке.
+   Раньше цифра, название и описание стояли по своим координатам
+   и наезжали, если название переносилось на две строки. */
+.rew__levels {
+  left: 75px; top: 399px; width: 1045px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  column-gap: var(--s10); align-items: start;
+}
+.rew__lvl { display: grid; gap: var(--s5); align-content: start; }
+.rew__num {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 150px; line-height: 135px;
+  font-variant-numeric: tabular-nums;
+}
+.rew__lvl-name {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 22px;
+  max-width: 26ch;
+}
+.rew__txt { margin: 0; font-size: 14px; line-height: 18px; max-width: 30ch; }
+
+.rew__ph {
+  left: 78px; top: 725px; width: 1043px; height: 510px;
+  background-size: cover; background-position: center;
+}
+.rew__panel { left: 78px; top: 725px; width: 652px; height: 510px; background: var(--dark); }
+
+.rew__lead {
+  left: 138px; top: 785px; width: 360px; z-index: 1;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 24px; color: var(--white);
+}
+.rew__form { left: 138px; top: 873px; width: 444px; max-width: none; z-index: 1; }
+
+/* Поля на тёмном: без рамки и заливки, только линия снизу — как на сайте */
+.form--dark input[type="text"],
+.form--dark input[type="tel"],
+.form--dark input[type="email"] {
+  background: transparent; color: var(--white);
+  border: 0; border-bottom: 1px solid rgba(255,255,255,.5);
+  padding: 0 0 var(--s3); height: 40px;
+}
+.form--dark input::placeholder { color: rgba(255,255,255,.6); }
+.form--dark input:focus { border-bottom-color: var(--white); outline: none; }
+.form--dark .field { gap: 0; }
+/* Код и номер — одной строкой, иначе они стоят на разной высоте */
+.form--dark .field--phone {
+  /* без flex-direction строка наследовала column от .field,
+     и код оказывался НАД номером, а не слева */
+  display: flex; flex-direction: row; align-items: center; gap: var(--s2);
+  border-bottom: 1px solid rgba(255,255,255,.5);
+  height: 40px;
+}
+.form--dark .field--phone .field__code {
+  position: static; transform: none; top: auto; left: auto;
+  flex: 0 0 auto; order: -1;
+  font-size: 14px; line-height: 18px; color: var(--white);
+}
+.form--dark .field--phone input {
+  flex: 1 1 auto; min-width: 0;
+  border-bottom: 0; padding: 0; height: auto;
+}
+.form--dark .field--phone:focus-within { border-bottom-color: var(--white); }
+.form--dark .consent { color: rgba(255,255,255,.85); }
+.form--dark .consent a { color: var(--white); border-bottom: 1px solid rgba(255,255,255,.5); text-decoration: none; }
+.form--dark .consent input { width: 18px; height: 18px; accent-color: var(--white); }
+.form--dark .btn--dark { background: var(--dark); color: var(--card); }
+.form--dark .btn--dark:hover { background: #363636; color: var(--white); }
+.form--dark .form, .form--dark { gap: var(--s6); }
+
+/* Телефон и на светлой форме — с кодом слева */
+.field--phone { position: relative; }
+.field--phone .field__code { position: absolute; left: var(--s3); top: 50%; transform: translateY(-50%); font-size: 14px; color: var(--muted); }
+.field--phone input { padding-left: 40px; }
+
+@media (max-width: 1199px) {
+  .section--rew { padding-block: 50px 100px; }
+  /* обычный поток: сетка из трёх колонок оставалась от десктопа
+     и зажимала уровни в первую колонку */
+  .rew {
+    width: auto; height: auto; padding-inline: var(--gutter);
+    display: block;
+  }
+  .rew > * + * { margin-top: var(--s10); }
+  .rew > * { position: static !important; width: auto !important; }
+  .rew__levels { display: grid; grid-template-columns: 1fr; row-gap: var(--s10); }
+  .rew__num { font-size: 70px; line-height: 63px; }
+  .rew__panel { display: none; }
+  .rew__ph { height: 280px !important; }
+  .form--dark .field__label, .form--dark .consent { color: var(--muted); }
+  .form--dark input { background: var(--card); color: var(--primary); border-color: var(--border); }
+  .form--dark .consent a { color: var(--accent); }
+}
+@media (max-width: 639px) {
+  .rew { grid-template-columns: 1fr; }
+  .rew__rule, .rew__label, .rew__title, .rew__sub,
+  .rew__ph, .rew__panel, .rew__lead, .rew__form { grid-column: 1; }
+}
+
+/* ============================================================
+   Первый блок «Сотрудничества» — композиция rec632091554
+   со страницы «Оптовикам». Сетка 1200, высота 542.
+   ============================================================ */
+.section--par { padding-block: 0; }
+.par {
+  position: relative;
+  width: 1200px; height: 542px;
+  margin-inline: auto;
+  overflow: hidden;
+}
+.par > * { position: absolute; margin: 0; }
+.par__title {
+  left: 74px; top: 228px; width: 987px;
+  font-size: 90px; line-height: 81px;   /* кегль блока на сайте */
+}
+.par__sub {
+  left: 81px; top: 402px; width: 706px;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 18px; text-transform: uppercase;
+}
+.par__note { left: 819px; top: 152px; width: 250px; font-size: 14px; line-height: 18px; }
+.par__btn { top: 440px; width: 214px; height: 44px; padding: 0; }
+.par__btn--1 { left: 80px; }
+.par__btn--2 { left: 304px; }
+
+@media (max-width: 1199px) {
+  .section--par { padding-block: 50px 100px; }
+  .par {
+    width: auto; height: auto; padding-inline: var(--gutter);
+    display: grid; gap: var(--s6);
+  }
+  .par > * { position: static !important; width: auto !important; }
+  .par__title { font-size: 40px; line-height: 36px; }
+  .par__btn { width: auto !important; justify-self: start; padding: 0 var(--s6); }
+}
+@media (max-width: 639px) { .par__title { font-size: 28px; line-height: 25px; } }
+
+/* В артбордах ширина заголовка задана координатами, ограничение в 700 мешает */
+.par__title, .rew__title, .cta__title, .abx__title,
+.gal__title, .rev__title, .con__title { max-width: none; }
+
+/* ============================================================
+   Фотогалерея — артборд rec632091605. Сетка 1200, высота 904:
+   слайдер 480/352 размером 720×432, два снимка слева.
+   ============================================================ */
+.section--gal { padding-block: 0; }
+.gal {
+  position: relative;
+  width: 1200px; height: 904px;
+  margin-inline: auto;
+  overflow: hidden;
+}
+.gal > * { position: absolute; margin: 0; }
+.gal__rule  { left: 416px; top: 50px; width: 1200px; height: 1px;
+  background: var(--primary); opacity: .1; }
+.gal__label { left: 416px; top: 81px; width: 294px; }
+.gal__title { left: 410px; top: 138px; width: 570px; }
+.gal__sub {
+  left: 415px; top: 256px; width: 305px;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 18px; text-transform: uppercase;
+}
+.gal__ph { background-size: cover; background-position: center; }
+.gal__ph--1 { left: 81px; top: 237px; width: 200px; height: 270px; }
+.gal__ph--2 { left: 80px; top: 544px; width: 300px; height: 240px; }
+.gal__slider { left: 480px; top: 352px; width: 720px; height: 432px; }
+
+/* Слайдер: кадры сменяются сами, стрелки внутри кадра — как в оригинале */
+.slider { position: relative; overflow: hidden; }
+.slider__track { position: absolute; inset: 0; }
+.slider__slide {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0; transition: opacity .5s ease;
+}
+.slider__slide.is-on { opacity: 1; }
+.slider__arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 30px; height: 30px; padding: 0;
+  border: 0; cursor: pointer;
+  background: rgba(210,210,210,.8);
+}
+.slider__arrow:hover { background: rgba(210,210,210,.5); }
+.slider__arrow::before {
+  content: ""; position: absolute; inset: 0;
+  background: no-repeat center / 11px 18px;
+}
+.slider__arrow--prev { left: 20px; }
+.slider__arrow--next { right: 20px; }
+.slider__arrow--prev::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M7 1L1 7l6 6' stroke='%231f1f1f' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+}
+.slider__arrow--next::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M1 1l6 6-6 6' stroke='%231f1f1f' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+}
+
+@media (max-width: 1199px) {
+  .section--gal { padding-block: 50px 100px; }
+  .gal {
+    width: auto; height: auto; padding-inline: var(--gutter);
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s8) var(--s10);
+  }
+  .gal > * { position: static !important; width: auto !important; }
+  .gal__rule, .gal__label, .gal__title, .gal__sub, .gal__slider { grid-column: 1 / span 2; }
+  .gal__ph { height: 260px !important; }
+  .gal__slider { height: 380px !important; }
+}
+@media (max-width: 639px) {
+  .gal { grid-template-columns: 1fr; }
+  .gal__rule, .gal__label, .gal__title, .gal__sub, .gal__slider { grid-column: 1; }
+  .gal__slider { height: 240px !important; }
+}
+
+/* ============================================================
+   Отзывы — шапка по артборду rec819904332 (высота 320) и слайдер
+   отзывов из блока t728: слева фотография клиента, справа текст,
+   имя набрано как заголовок, дата приглушена.
+   ============================================================ */
+.section--rev { padding-block: 0 100px; }
+.rev {
+  position: relative;
+  width: 1200px; height: 320px;
+  margin-inline: auto;
+  overflow: hidden;
+}
+.rev > * { position: absolute; margin: 0; }
+.rev__rule  { left: 421px; top: 50px; width: 1200px; height: 1px;
+  background: var(--primary); opacity: .1; }
+.rev__label { left: 416px; top: 81px; width: 216px; }
+.rev__title { left: 411px; top: 138px; width: 704px; }
+
+/* Слайдер отзывов: кадры подменяются, высота по содержимому */
+.rev__slider { overflow: visible; }
+/* Слайды лежат в одной ячейке сетки: высота по самому длинному,
+   смена — плавным проявлением, а не скачком */
+.rev__slider .slider__track { position: static; display: grid; }
+.rev__slide {
+  position: static; inset: auto;
+  grid-area: 1 / 1;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .45s ease, visibility .45s;
+  display: grid;
+  /* колонка 336 — чтобы текст отзыва начинался на 416, по той же
+     вертикали, что надзаголовок и заголовок блока */
+  grid-template-columns: 336px 1fr;
+  column-gap: 0;
+  align-items: start;
+}
+.rev__slide.is-on { opacity: 1; visibility: visible; pointer-events: auto; }
+.rev__ph { width: 300px; aspect-ratio: 3 / 4; background-size: cover; background-position: center; }
+.rev__body { display: grid; gap: var(--s5); align-content: start; }
+.rev__text { margin: 0; font-size: 14px; line-height: 18px; max-width: 62ch; }
+.rev__name {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 18px; text-transform: uppercase;
+}
+.rev__date { font-size: 14px; line-height: 17px; color: var(--disabled); }
+/* Серия радиатора — подписью над фотографией. По тексту отзыва она
+   видна не всегда: где не сказано, проставлена условно и нужно
+   подтверждение заказчика. */
+.rev__side { display: grid; gap: var(--s3); align-content: start; width: 300px; }
+.rev__model {
+  justify-self: start;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 16px; line-height: 21px; text-transform: uppercase;
+}
+
+/* Стрелки по краям слайда, без плашки — как на сайте */
+.rev__slider { position: relative; }
+.rev__slider .slider__arrow {
+  top: 50%; transform: translateY(-50%);
+  width: 40px; height: 40px; background: none;
+  transition: opacity .2s ease;
+}
+.rev__slider .slider__arrow:hover { background: none; opacity: .6; }
+.rev__slider .slider__arrow--prev { left: -56px; }
+.rev__slider .slider__arrow--next { right: -56px; left: auto; }
+
+/* Кнопки площадок по центру, под слайдером */
+.rev__places {
+  display: flex; justify-content: center; gap: var(--s5); flex-wrap: wrap;
+  margin-top: var(--s16);
+}
+
+
+@media (max-width: 1199px) {
+  .section--rev { padding-block: 50px 100px; }
+  .rev {
+    width: auto; height: auto; padding-inline: var(--gutter);
+    display: grid; gap: var(--s6);
+  }
+  .rev > * { position: static !important; width: auto !important; }
+}
+@media (max-width: 639px) {
+  .rev__slide { grid-template-columns: 1fr; row-gap: var(--s6); }
+  .rev__side { width: auto; }
+  .rev__slider { padding-inline: 0; }
+  .rev__slider .slider__arrow { position: static; transform: none; display: inline-block; }
+  .rev__ph { aspect-ratio: 4 / 3; }
+}
+
+/* ============================================================
+   Контакты. Данные — со страницы /contacts сайта, композиция — по
+   реф-логике artehome: слева блоки контактов, справа карта во всю
+   высоту колонки. Артборд 1:1 давал узкую колонку в 260 px и пустое
+   поле справа, поэтому от него отказались.
+   ============================================================ */
+.section--con { padding-block: 50px 100px; }
+
+.con__title { margin: 0; }
+
+.con__body {
+  display: grid; grid-template-columns: 1fr 1fr;
+  column-gap: var(--s16); align-items: stretch;
+  margin-top: var(--s16);
+}
+.con__grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--s10) var(--s8); align-content: start;
+}
+.con__item { display: grid; gap: var(--s2); align-content: start; }
+.con__item--wide { grid-column: 1 / span 2; }
+
+.con__phone {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 40px; line-height: 36px;
+  text-decoration: none; color: inherit;
+}
+.con__phone:hover { color: var(--accent); }
+
+.con__label {
+  font-size: 14px; line-height: 17px;
+  color: var(--primary); opacity: .45;
+}
+.con__val { font-size: 14px; line-height: 18px; text-decoration: none; color: inherit; }
+a.con__val:hover { color: var(--accent); }
+.con__mess a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--border); }
+.con__mess a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.con__map { width: 100%; min-height: 460px; border: 0; background: var(--card); }
+
+@media (max-width: 959px) {
+  .con__body { grid-template-columns: 1fr; row-gap: var(--s10); }
+  .con__map { min-height: 320px; }
+}
+@media (max-width: 639px) {
+  .con__grid { grid-template-columns: 1fr; }
+  .con__item--wide { grid-column: 1; }
+  .con__phone { font-size: 28px; line-height: 25px; }
+}
+
+/* Заявка на фотографии: снимок во всю ширину, форма поверх него слева.
+   Тёмной плашки нет — фон даёт сама фотография, как в блоке сайта. */
+/* Заявка на фотографии. Координаты из блока сайта: снимок 1043 × 510
+   на отметке 78 по сетке 1200 — то есть с полями по бокам, а не во всю
+   ширину экрана. Текст на 60 от верха снимка, форма на 148. */
+.cform {
+  position: relative;
+  width: 1200px; height: 510px;
+  margin: var(--s20) auto 0;
+}
+.cform__ph {
+  position: absolute; left: 78px; top: 0;
+  width: 1043px; height: 510px;
+  background-size: cover; background-position: center;
+}
+.cform__inner { position: absolute; left: 138px; top: 60px; width: 444px; }
+.cform__lead {
+  margin: 0 0 var(--s12);
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 24px; text-transform: uppercase;
+  color: var(--white);
+}
+.cform__form { width: 444px; max-width: 100%; }
+
+@media (max-width: 1199px) {
+  .section--con { padding-block: 50px 100px; }
+  .con {
+    width: auto; height: auto; padding-inline: var(--gutter);
+    display: grid; gap: var(--s5);
+  }
+  .con > * { position: static !important; width: auto !important; }
+  .con__map { height: 360px !important; margin-top: var(--s8); }
+  .cform { width: auto; height: auto; padding-inline: var(--gutter); }
+  .cform__ph { position: relative; left: auto; width: 100%; height: 280px; }
+  .cform__inner { position: static; width: auto; margin-top: var(--s8); }
+  .cform__lead { color: var(--primary); }
+  .cform__form { width: 100%; max-width: 460px; }
+  .form--dark input[type="text"], .form--dark input[type="tel"], .form--dark input[type="email"] {
+    color: var(--primary); border-bottom-color: var(--border);
+  }
+  .form--dark input::placeholder { color: var(--disabled); }
+  .form--dark .field--phone { border-bottom-color: var(--border); }
+  .form--dark .field--phone .field__code { color: var(--primary); }
+  .form--dark .consent { color: var(--muted); }
+  .form--dark .consent a { color: var(--accent); border-bottom-color: var(--accent); }
+}
+
+/* Первый блок страницы: разделителя над ним нет, отделять нечего */
+.page > .section:first-child .rev__rule,
+.page > .section:first-child .gal__rule,
+.page > .section:first-child .rew__rule,
+.page > .section:first-child .abx__rule { display: none; }
+
+/* ============================================================
+   Мобильная версия: проверено на 390 и 768. Всё в одну колонку,
+   как в мобильной вёрстке сайта.
+   ============================================================ */
+@media (max-width: 959px) {
+  /* карточка товара оставалась в две колонки и уезжала за экран */
+  .product { grid-template-columns: 1fr; gap: var(--s8); }
+  .product__info { min-width: 0; }
+  .opt select, .field input, .form { max-width: 100%; }
+
+  /* уровни вознаграждений шире экрана из-за ширины 1045 */
+  .rew__levels { width: auto !important; }
+  .rew__lvl { min-width: 0; }
+
+  /* галерея и отзывы: снимки на всю ширину колонки */
+  .gal__ph, .rev__ph { width: auto !important; }
+  .rev__side { width: auto; }
+
+  /* стрелки слайдеров не за краем, а внутри */
+  .rev__slider .slider__arrow--prev { left: 0; }
+  .rev__slider .slider__arrow--next { right: 0; }
+  .rev__slider { padding-inline: 44px; }
+}
+
+@media (max-width: 639px) {
+  .product__thumb { width: 72px; }
+  .rev__slider { padding-inline: 0; }
+  .rev__slider .slider__arrow { position: static; transform: none; display: inline-block; }
+  .rev__places { flex-direction: column; align-items: stretch; }
+  .rev__places .btn { width: 100%; }
+}
+
+/* ============================================================
+   Хлебные крошки — один вид на всех внутренних страницах,
+   как на страницах сайта: «Главная ⟶ Раздел».
+   ============================================================ */
+.crumbs {
+  display: flex; align-items: center; gap: var(--s3);
+  margin: 0; padding-top: var(--s10);
+  font-size: 14px; line-height: 18px; color: var(--primary);
+}
+.crumbs a { color: var(--disabled); text-decoration: none; transition: color .2s ease; }
+.crumbs a:hover { color: var(--accent); }
+.crumbs span { color: var(--disabled); }
+
+/* Секция после крошек не должна добавлять свой верхний отступ */
+.page > .shell + .section { padding-top: 30px; }
+
+/* Блок заявки на фотографии — общая секция для каталога и контактов */
+.section--cform { padding-block: 0 100px; }
+
+@media (max-width: 639px) { .crumbs { padding-top: var(--s6); } }
+
+/* Табы линеек: на узком экране не помещаются в строку — прокручиваем
+   их пальцем, как в мобильной вёрстке сайта, а не ломаем на строки */
+@media (max-width: 959px) {
+  .tabs {
+    display: flex; flex-wrap: nowrap;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex: 0 0 auto; padding-right: var(--s6); }
+}
+
+/* ============================================================
+   Этапы работы — артборд rec819904325, сетка 1200, высота 706.
+   Четыре шага двумя парами: 80 и 479 по горизонтали, 376 и 490
+   по вертикали. Фотография справа на 879/120.
+   ============================================================ */
+.steps {
+  position: relative;
+  overflow: hidden;   /* фото и линия уходят за 1200, как в оригинале */
+  width: 1200px; height: 706px;
+  margin-inline: auto;
+}
+.steps > * { position: absolute; margin: 0; }
+
+.steps__rule { left: 80px; top: 50px; width: 700px; height: 1px; background: var(--primary); opacity: .1; }
+.steps__label { left: 80px; top: 81px; width: 216px; }
+.steps__title { left: 74px; top: 138px; width: 646px; }
+.steps__sub {
+  left: 76px; top: 312px; width: 430px;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 20px; line-height: 24px; text-transform: uppercase;
+}
+
+.steps__item { display: grid; grid-template-columns: 72px 1fr; column-gap: 0; align-items: start; }
+.steps__num {
+  grid-row: 1 / span 2;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 60px; line-height: 54px;
+}
+.steps__name {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 16px; line-height: 21px; text-transform: uppercase;
+}
+.steps__text { margin: var(--s3) 0 0; font-size: 14px; line-height: 18px; }
+
+.steps__item--1 { left: 81px; top: 376px; width: 320px; }
+.steps__item--2 { left: 479px; top: 376px; width: 260px; }
+.steps__item--3 { left: 77px; top: 490px; width: 324px; }
+.steps__item--4 { left: 479px; top: 490px; width: 330px; }
+
+.steps__ph {
+  left: 879px; top: 120px; width: 341px; height: 398px;
+  background-size: cover; background-position: center;
+}
+
+/* ============================================================
+   Работать с нами выгодно — артборд rec819904326.
+   Фотография слева 500 × 416 на 80/285, справа два условия.
+   ============================================================ */
+.deal {
+  position: relative;
+  overflow: hidden;   /* фото и линия уходят за 1200, как в оригинале */
+  width: 1200px; height: 760px;
+  margin-inline: auto;
+}
+.deal > * { position: absolute; margin: 0; }
+
+.deal__rule { left: 416px; top: 49px; width: 1200px; height: 1px; background: var(--primary); opacity: .1; }
+.deal__label { left: 416px; top: 80px; width: 340px; }
+.deal__title { left: 410px; top: 137px; width: 710px; }
+
+.deal__ph {
+  left: 80px; top: 285px; width: 500px; height: 416px;
+  background-size: cover; background-position: center;
+}
+.deal__offer { left: 660px; width: 400px; display: grid; gap: var(--s5); justify-items: start; }
+.deal__offer--1 { top: 300px; }
+.deal__offer--2 { top: 500px; }
+.deal__name {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 16px; line-height: 21px; text-transform: uppercase;
+}
+
+@media (max-width: 1199px) {
+  .steps, .deal {
+    width: auto; height: auto; padding-inline: var(--gutter);
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s10) var(--s8);
+  }
+  .steps > *, .deal > * { position: static !important; width: auto !important; }
+  .steps__rule, .steps__label, .steps__title, .steps__sub, .steps__ph,
+  .deal__rule, .deal__label, .deal__title, .deal__ph { grid-column: 1 / span 2; }
+  .steps__rule, .deal__rule { display: none; }
+  .steps__ph { height: 320px; }
+  .deal__ph { height: 300px; }
+  .deal__offer { justify-items: stretch; }
+  .deal__offer .btn { justify-self: start; }
+}
+@media (max-width: 639px) {
+  .steps, .deal { grid-template-columns: 1fr; }
+  .steps__rule, .steps__label, .steps__title, .steps__sub, .steps__ph,
+  .deal__rule, .deal__label, .deal__title, .deal__ph { grid-column: 1; }
+  .steps__num { font-size: 40px; line-height: 36px; }
+}
+
+/* Первый блок внутренней страницы уже назван в крошках и в заголовке.
+   Маленький надзаголовок над ним и линия дублируют навигацию — убираем. */
+.page > .shell + .section > .shell::before { content: none; }
+.page > .shell + .section .section__label,
+.page > .shell + .section .gal__rule,
+.page > .shell + .section .rev__rule,
+.page > .shell + .section .par__rule,
+.page > .shell + .section .rule { display: none; }
+
+@media (max-width: 1199px) {
+  .abx__stat { width: auto; }
+  .abx__stat .abx__hr { width: 100%; }
+}

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Контакты CALDO — телефоны, почта, адрес производства</title>
+<meta name="description" content="Телефоны, электронная почта по отделам, адрес производства в Ярославле, карта проезда и мессенджеры.">
+
+<!-- Tilda Sans — тот же источник, что и на текущем сайте caldo.studio.
+     Подключён неблокирующим способом: если CDN тормозит, страница всё равно
+     рисуется, а на машинах с установленным Tilda Sans шрифт берётся локально. -->
+<link rel="preconnect" href="https://static.tildacdn.com" crossorigin>
+<link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css"></noscript>
+<link rel="stylesheet" href="assets/site.css?v=32">
+</head>
+
+<body>
+<script>
+/* Масштаб макета под ширину окна — то же, что делает модуль ANNEXX на сайте:
+   сетка 1200 растягивается на всё окно. Ниже 1200 масштаб не трогаем,
+   там работают брейкпоинты. */
+(function () {
+  var root = document.documentElement;
+  function fit() {
+    var w = root.clientWidth;
+    root.style.setProperty('--k', w >= 1200 ? (w / 1200).toFixed(4) : '1');
+  }
+  fit();
+  addEventListener('resize', fit, { passive: true });
+})();
+</script>
+
+<header class="header header--solid header--static" id="header">
+  <div class="shell header__inner">
+    <a class="logo" href="index.html" aria-label="CALDO — на главную">Caldo</a>
+
+    <nav class="nav" aria-label="Основная навигация">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="index.html">О компании</a></li>
+    <li class="nav__item"><a class="nav__link" href="catalog.html">Каталог</a></li>
+    <li class="nav__item"><a class="nav__link" href="partners.html">Сотрудничество</a></li>
+    <li class="nav__item"><a class="nav__link" href="gallery.html">Фотогалерея</a></li>
+    <li class="nav__item"><a class="nav__link" href="reviews.html">Отзывы</a></li>
+    <li class="nav__item"><a class="nav__link" href="contacts.html" aria-current="page">Контакты</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__aside">
+      <a class="header__phone" href="tel:+78003006152">+7 (800) 300 61 52</a>
+      <a class="btn btn--primary" href="contacts.html">Связаться с нами</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Открыть меню разделов">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" id="menu" data-open="false" aria-label="Разделы сайта">
+  <ul class="overlay__list">
+    <li><a class="overlay__link" href="index.html">О компании</a></li>
+    <li><a class="overlay__link" href="catalog.html">Каталог</a></li>
+    <li><a class="overlay__link" href="partners.html">Сотрудничество</a></li>
+    <li><a class="overlay__link" href="gallery.html">Фотогалерея</a></li>
+    <li><a class="overlay__link" href="reviews.html">Отзывы</a></li>
+    <li><a class="overlay__link" href="contacts.html" aria-current="page">Контакты</a></li>
+  </ul>
+  <div class="overlay__contacts">
+    <a href="tel:+78003006152">+7 (800) 300 61 52</a>
+    <a href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a>
+    <div class="overlay__messengers">
+      <a href="https://t.me/caldo_studio" rel="noopener">Telegram</a>
+      <a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a>
+      <a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a>
+    </div>
+    <a class="btn btn--primary" href="contacts.html">Связаться с нами</a>
+  </div>
+</div>
+
+<main id="top" class="page">
+  <!-- Хлебные крошки: одинаковые на всех внутренних страницах -->
+  <div class="shell">
+    <p class="crumbs"><a href="index.html">Главная</a><span aria-hidden="true">&#10230;</span>Контакты</p>
+  </div>
+
+<!-- ============ КОНТАКТЫ ============
+       Артборд rec642373756 со страницы /contacts: крошки 133, заголовок
+       75/228 шириной 740, телефон 396, блоки «Для связи», «По вопросам
+       оптовых продаж», адреса и время работы по левой колонке,
+       карта 419/396 размером 701×510. Высота 965. -->
+  <section class="section section--con" id="contacts">
+    <div class="shell">
+      <h1 class="section__title con__title">Caldo — тепло, которое вы искали</h1>
+
+      <!-- По рефу artehome: слева блоки контактов, справа карта во всю высоту.
+           Данные — со страницы /contacts сайта, дословно. -->
+      <div class="con__body">
+        <div class="con__grid">
+          <div class="con__item con__item--wide">
+            <a class="con__phone" href="tel:+78003006152">+7 (800) 300 61 52</a>
+          </div>
+
+          <div class="con__item">
+            <span class="con__label">Для связи</span>
+            <a class="con__val" href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a>
+          </div>
+          <div class="con__item">
+            <span class="con__label">Оптовые продажи</span>
+            <a class="con__val" href="mailto:leo@caldo.studio">leo@caldo.studio</a>
+          </div>
+
+          <div class="con__item">
+            <span class="con__label">Адрес офиса</span>
+            <span class="con__val">г. Ярославль, Ленинградский проспект 33,<br>офис 110 (ТЦ Омега)</span>
+          </div>
+          <div class="con__item">
+            <span class="con__label">Адрес производства</span>
+            <span class="con__val">г. Ярославль, просп. Октября д. 86А</span>
+          </div>
+
+          <div class="con__item">
+            <span class="con__label">Время работы</span>
+            <span class="con__val">Офис: пн-пт с&nbsp;9 до&nbsp;20, сб с&nbsp;10 до&nbsp;18,<br>вс&nbsp;— выходной</span>
+          </div>
+          <div class="con__item">
+            <span class="con__label">Производство</span>
+            <span class="con__val">Ежедневно с&nbsp;7 до&nbsp;16 часов</span>
+          </div>
+
+          <div class="con__item con__item--wide">
+            <span class="con__label">Мессенджеры</span>
+            <span class="con__val con__mess">
+              <a href="https://t.me/caldo_studio" rel="noopener">Telegram</a> ·
+              <a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a> ·
+              <a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a>
+            </span>
+          </div>
+        </div>
+
+        <iframe class="con__map" title="Карта проезда до офиса CALDO в Ярославле" loading="lazy"
+                src="https://yandex.ru/map-widget/v1/?um=constructor%3A994b1e76d63525ed862ddfd5242b5301f2dbe87fcebba626e6a1d04887b80822&amp;source=constructor"></iframe>
+      </div>
+    </div>
+
+    <!-- ДОБАВЛЕНО ПО ТЗ: заявка. Блок собран так же, как на «Дизайнерам»:
+         фотография ronda_1920_768_2 размером 1043 × 510, поверх неё тёмная
+         плашка 652 × 510, на плашке текст и форма. -->
+    <!-- ДОБАВЛЕНО ПО ТЗ: заявка. Как в блоке сайта: фотография во всю ширину,
+         форма поверх неё слева, поля без рамок — только линия снизу. -->
+    <div class="cform">
+      <div class="cform__ph" role="img" aria-label="Радиатор CALDO на тёмной стене"
+           style="background-image: url('https://static.tildacdn.com/tild3236-3963-4439-b230-333036323033/ronda_1920_768_2.png')"></div>
+      <div class="cform__inner">
+        <p class="cform__lead">Заполните форму, мы&nbsp;свяжемся с&nbsp;вами и&nbsp;обсудим детали</p>
+      <form class="form form--dark cform__form" novalidate>
+        <div class="field">
+          <label class="visually-hidden" for="cform-name">Ваше имя</label>
+          <input id="cform-name" name="name" type="text" autocomplete="name" placeholder="Ваше имя" required>
+        </div>
+        <div class="field">
+          <label class="visually-hidden" for="cform-email">Email</label>
+          <input id="cform-email" name="email" type="email" autocomplete="email" placeholder="Email">
+        </div>
+        <div class="field field--phone">
+          <label class="visually-hidden" for="cform-phone">Телефон</label>
+          <span class="field__code" aria-hidden="true">+7</span>
+          <input id="cform-phone" name="phone" type="tel" autocomplete="tel" placeholder="(000) 000-00-00" required>
+        </div>
+        <label class="consent">
+          <input type="checkbox" name="consent" required>
+          <span>Я соглашаюсь с <a href="#">политикой конфиденциальности</a></span>
+        </label>
+        <button class="btn btn--dark btn--lg" type="submit">Оставить заявку</button>
+      </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__top">
+      <div>
+        <div class="footer__logo">Caldo</div>
+        <p>Стальные трубчатые радиаторы<br>от производителя. Гарантия 20 лет.</p>
+      </div>
+      <div class="footer__cols">
+        <div class="footer__col">
+          <h4>Разделы</h4>
+          <ul>
+            <li><a href="index.html">О компании</a></li>
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="partners.html">Сотрудничество</a></li>
+            <li><a href="gallery.html">Фотогалерея</a></li>
+            <li><a href="reviews.html">Отзывы</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Связь</h4>
+          <ul>
+            <li><a href="tel:+78003006152">+7 (800) 300 61 52</a></li>
+            <li><a href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a></li>
+            <li><a href="https://t.me/caldo_studio" rel="noopener">Telegram</a></li>
+            <li><a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a></li>
+            <li><a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 CALDO. Все права защищены</span>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=32"></script>
+</body>
+</html>

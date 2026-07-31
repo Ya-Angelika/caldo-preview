@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Фотогалерея CALDO — радиаторы в интерьере</title>
+<meta name="description" content="Живые фотографии от клиентов и визуализации радиаторов CALDO в интерьере.">
+
+<!-- Tilda Sans — тот же источник, что и на текущем сайте caldo.studio.
+     Подключён неблокирующим способом: если CDN тормозит, страница всё равно
+     рисуется, а на машинах с установленным Tilda Sans шрифт берётся локально. -->
+<link rel="preconnect" href="https://static.tildacdn.com" crossorigin>
+<link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css"></noscript>
+<link rel="stylesheet" href="assets/site.css?v=32">
+</head>
+
+<body>
+<script>
+/* Масштаб макета под ширину окна — то же, что делает модуль ANNEXX на сайте:
+   сетка 1200 растягивается на всё окно. Ниже 1200 масштаб не трогаем,
+   там работают брейкпоинты. */
+(function () {
+  var root = document.documentElement;
+  function fit() {
+    var w = root.clientWidth;
+    root.style.setProperty('--k', w >= 1200 ? (w / 1200).toFixed(4) : '1');
+  }
+  fit();
+  addEventListener('resize', fit, { passive: true });
+})();
+</script>
+
+<header class="header header--solid header--static" id="header">
+  <div class="shell header__inner">
+    <a class="logo" href="index.html" aria-label="CALDO — на главную">Caldo</a>
+
+    <nav class="nav" aria-label="Основная навигация">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="index.html">О компании</a></li>
+    <li class="nav__item"><a class="nav__link" href="catalog.html">Каталог</a></li>
+    <li class="nav__item"><a class="nav__link" href="partners.html">Сотрудничество</a></li>
+    <li class="nav__item"><a class="nav__link" href="gallery.html" aria-current="page">Фотогалерея</a></li>
+    <li class="nav__item"><a class="nav__link" href="reviews.html">Отзывы</a></li>
+    <li class="nav__item"><a class="nav__link" href="contacts.html">Контакты</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__aside">
+      <a class="header__phone" href="tel:+78003006152">+7 (800) 300 61 52</a>
+      <a class="btn btn--primary" href="contacts.html">Связаться с нами</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Открыть меню разделов">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" id="menu" data-open="false" aria-label="Разделы сайта">
+  <ul class="overlay__list">
+    <li><a class="overlay__link" href="index.html">О компании</a></li>
+    <li><a class="overlay__link" href="catalog.html">Каталог</a></li>
+    <li><a class="overlay__link" href="partners.html">Сотрудничество</a></li>
+    <li><a class="overlay__link" href="gallery.html" aria-current="page">Фотогалерея</a></li>
+    <li><a class="overlay__link" href="reviews.html">Отзывы</a></li>
+    <li><a class="overlay__link" href="contacts.html">Контакты</a></li>
+  </ul>
+  <div class="overlay__contacts">
+    <a href="tel:+78003006152">+7 (800) 300 61 52</a>
+    <a href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a>
+    <div class="overlay__messengers">
+      <a href="https://t.me/caldo_studio" rel="noopener">Telegram</a>
+      <a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a>
+      <a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a>
+    </div>
+    <a class="btn btn--primary" href="contacts.html">Связаться с нами</a>
+  </div>
+</div>
+
+<main id="top" class="page">
+  <!-- Хлебные крошки: одинаковые на всех внутренних страницах -->
+  <div class="shell">
+    <p class="crumbs"><a href="index.html">Главная</a><span aria-hidden="true">&#10230;</span>Фотогалерея</p>
+  </div>
+
+<!-- ============ ФОТОГАЛЕРЕЯ ============
+       Блок rec632091605: линия 416/50, надзаголовок 81, заголовок 410/138,
+       подзаголовок 415/256, слайдер 480/352 размером 720×432 и два снимка
+       слева с параллаксом. Высота артборда 904. -->
+  <section class="section section--gal" id="gallery">
+    <div class="gal">
+      <span class="gal__rule"></span>
+      <span class="section__label gal__label">Фото радиаторов в&nbsp;интерьере</span>
+      <h2 class="section__title gal__title">Посмотрите, как мы</h2>
+      <p class="gal__sub">наполняем интерьеры теплом и&nbsp;уютом</p>
+
+      <div class="gal__ph gal__ph--1" role="img" aria-label="Радиатор CALDO Ronda"
+           style="background-image: url('https://static.tildacdn.com/tild6661-6665-4637-a662-306665616466/Ronda___1_1.png')"></div>
+      <div class="gal__ph gal__ph--2" role="img" aria-label="Радиатор CALDO Aria"
+           style="background-image: url('https://static.tildacdn.com/tild3263-3063-4561-a663-613931623538/Aria__1.png')"></div>
+
+      <div class="slider gal__slider" data-autoplay="3000">
+        <div class="slider__track">
+          <div class="slider__slide" role="img" aria-label="Радиатор CALDO Cube в интерьере"
+               style="background-image: url('https://static.tildacdn.com/tild3732-3039-4936-b264-653732323761/Cube__3_2.png')"></div>
+          <div class="slider__slide" role="img" aria-label="Радиатор CALDO Cube"
+               style="background-image: url('https://static.tildacdn.com/tild3463-6433-4231-b932-636166353561/Cube__2_1.png')"></div>
+          <div class="slider__slide" role="img" aria-label="Радиатор CALDO Bordo"
+               style="background-image: url('https://static.tildacdn.com/tild6134-6564-4331-a664-313964653934/Caldo_Bordo_X_-_whit.png')"></div>
+        </div>
+        <button class="slider__arrow slider__arrow--prev" type="button" aria-label="Предыдущий снимок"></button>
+        <button class="slider__arrow slider__arrow--next" type="button" aria-label="Следующий снимок"></button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__top">
+      <div>
+        <div class="footer__logo">Caldo</div>
+        <p>Стальные трубчатые радиаторы<br>от производителя. Гарантия 20 лет.</p>
+      </div>
+      <div class="footer__cols">
+        <div class="footer__col">
+          <h4>Разделы</h4>
+          <ul>
+            <li><a href="index.html">О компании</a></li>
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="partners.html">Сотрудничество</a></li>
+            <li><a href="gallery.html">Фотогалерея</a></li>
+            <li><a href="reviews.html">Отзывы</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Связь</h4>
+          <ul>
+            <li><a href="tel:+78003006152">+7 (800) 300 61 52</a></li>
+            <li><a href="mailto:zakaz@caldo.studio">zakaz@caldo.studio</a></li>
+            <li><a href="https://t.me/caldo_studio" rel="noopener">Telegram</a></li>
+            <li><a href="https://wa.me/79301040169" rel="noopener">WhatsApp</a></li>
+            <li><a href="https://max.ru/id760404427099_bot" rel="noopener">Max</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 CALDO. Все права защищены</span>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=32"></script>
+</body>
+</html>
