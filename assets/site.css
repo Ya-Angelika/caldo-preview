@@ -1084,9 +1084,6 @@ a { color: inherit; }
   .rew__num { font-size: 70px; line-height: 63px; }
   .rew__panel { display: none; }
   .rew__ph { height: 280px !important; }
-  .form--dark .field__label, .form--dark .consent { color: var(--muted); }
-  .form--dark input { background: var(--card); color: var(--primary); border-color: var(--border); }
-  .form--dark .consent a { color: var(--accent); }
 }
 @media (max-width: 639px) {
   .rew { grid-template-columns: 1fr; }
@@ -1416,8 +1413,10 @@ a.con__val:hover { color: var(--accent); }
     background: rgba(38, 43, 48, .88);
   }
   .cform__form { width: 100%; max-width: 460px; }
-  .form--dark .consent { color: var(--muted); }
-  .form--dark .consent a { color: var(--accent); border-bottom-color: var(--accent); }
+  /* Согласие на тёмной форме — белым, без красной ссылки: в рефе она
+     не выделена цветом, только подчёркиванием */
+  .form--dark .consent { color: rgba(255, 255, 255, .85); }
+  .form--dark .consent a { color: var(--white); border-bottom-color: rgba(255, 255, 255, .5); }
 }
 
 /* Первый блок страницы: разделителя над ним нет, отделять нечего */
