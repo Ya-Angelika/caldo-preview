@@ -1372,16 +1372,24 @@ a.con__val:hover { color: var(--accent); }
   width: 1200px; height: 510px;
   margin: var(--s20) auto 0;
 }
+/* Размеры из исходника rec632151438: снимок 652 × 510 на 78/725,
+   заголовок 360 на 138/785, форма 444 на 138/873 — то есть 60 от
+   верха снимка до заголовка и 148 до формы. Раньше снимок был
+   растянут на 1043 и показывал не тот кусок кадра. */
 .cform__ph {
   position: absolute; left: 78px; top: 0;
-  width: 1043px; height: 510px;
+  width: 652px; height: 510px;
   background-size: cover; background-position: center;
 }
-.cform__inner { position: absolute; left: 138px; top: 60px; width: 444px; }
+.cform__inner {
+  position: absolute; left: 138px; top: 60px; width: 444px;
+  display: grid; grid-template-rows: 88px auto;   /* форма ровно на 148 от верха снимка */
+}
 .cform__lead {
-  margin: 0 0 var(--s12);
+  margin: 0;
+  width: 360px; max-width: 100%;
   font-family: var(--font-display); font-weight: 300;
-  font-size: 20px; line-height: 24px; text-transform: uppercase;
+  font-size: 20px; line-height: 19px; text-transform: uppercase;
   color: var(--white);
 }
 .cform__form { width: 444px; max-width: 100%; }
@@ -1405,12 +1413,15 @@ a.con__val:hover { color: var(--accent); }
   .cform__ph { position: absolute; inset: 0; left: 0; width: 100%; height: 100%; }
   .cform__ph::after {
     content: ""; position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(20,19,19,.25) 0%, rgba(20,19,19,.05) 60%, rgba(20,19,19,.3) 100%);
+    background: linear-gradient(180deg, rgba(20,19,19,.45) 0%, rgba(20,19,19,.3) 60%, rgba(20,19,19,.45) 100%);
   }
+  /* Плашки в оригинале нет: стена на снимке сама тёмная, форма лежит
+     прямо на кадре. Лёгкое затемнение оставлено на снимке — наш кроп
+     шире исходного 300 × 354 и местами светлее. */
   .cform__inner {
     position: relative; width: auto; left: auto; top: auto;
     padding: var(--s8) var(--s6) var(--s10);
-    background: rgba(38, 43, 48, .88);
+    grid-template-rows: 65px auto;   /* 820 → 885 в исходнике */
   }
   .cform__form { width: 100%; max-width: 460px; }
   /* Согласие на тёмной форме — белым, без красной ссылки: в рефе она
@@ -1674,17 +1685,42 @@ a.con__val:hover { color: var(--accent); }
 /* Размеры тёмной формы — из инлайновых стилей блока rec632151438.
    Они не зависят от брейкпоинта, значит верны и на десктопе:
    поля 12 / 40, согласие 10, кнопка 200 × 50. */
+/* Форма: на десктопе поля 14 / высота 50 / шаг 20, на телефоне
+   12 / 40 / 10 — значения inputfontsize, inputheight, inputmargbottom
+   и их res-320 из того же блока. */
 .form--dark input[type="text"],
 .form--dark input[type="tel"],
 .form--dark input[type="email"],
-.form--dark .field--phone .field__code { font-size: 12px; }
+.form--dark .field--phone,
+.form--dark .field--phone .field__code { font-size: 14px; }
 .form--dark input[type="text"],
 .form--dark input[type="tel"],
-.form--dark input[type="email"] { height: 40px; }
-.form--dark input::placeholder { color: rgba(255, 255, 255, .45); }
-.form--dark .consent { font-size: 10px; line-height: 14px; }
+.form--dark input[type="email"],
+.form--dark .field--phone { height: 50px; }
+.form--dark { gap: 0; }
+.form--dark .field { margin-bottom: 20px; }
+.form--dark input::placeholder { color: rgba(255, 255, 255, .5); }
+.form--dark .consent { font-size: 12px; line-height: 16px; }
 .form--dark .consent input { width: 16px; height: 16px; }
-.form--dark .btn { width: 200px; height: 50px; padding: 0 15px; font-weight: 300; }
+.form--dark .btn { width: 200px; height: 50px; padding: 0 15px; font-weight: 300; font-size: 14px; }
+
+@media (max-width: 639px) {
+  .form--dark input[type="text"],
+  .form--dark input[type="tel"],
+  .form--dark input[type="email"],
+  .form--dark .field--phone,
+  .form--dark .field--phone .field__code { font-size: 12px; }
+  .form--dark input[type="text"],
+  .form--dark input[type="tel"],
+  .form--dark input[type="email"],
+  .form--dark .field--phone { height: 40px; }
+  .form--dark .field { margin-bottom: 10px; }
+  .form--dark .consent { margin-bottom: 10px; }
+  .form--dark .consent { font-size: 10px; line-height: 14px; }
+  .form--dark .btn { font-size: 12px; }
+  .cform__lead { font-size: 16px; line-height: 19px; width: auto; }
+  .cform__form { width: auto; }
+}
 
 /* Флажок кода страны — как в форме сайта */
 .field--phone .field__code::before {
