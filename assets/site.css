@@ -318,6 +318,13 @@ a { color: inherit; }
 }
 @keyframes heroZoom { to { transform: scale(1); } }
 
+/* На телефоне кадр 1:1 обрезается по высоте, и при 62 % в окно попадала
+   кухня, а радиатор уходил за правый край. Смещаем кадр на него — ТЗ
+   требует, чтобы на первом экране был виден именно радиатор. */
+@media (max-width: 639px) {
+  .hero__media { background-position: 78% 45%; }
+}
+
 /* Подложка: слева плотнее — там текст. Требование ТЗ про читаемость. */
 .hero__scrim {
   position: absolute;
@@ -504,15 +511,27 @@ a { color: inherit; }
     align-items: start;
   }
   .abx > * { position: static !important; width: auto !important; }
-  .abx__rule  { order: 1; grid-column: 1 / span 2; }
-  .abx__label { order: 2; grid-column: 1 / span 2; }
-  .abx__title { order: 3; grid-column: 1 / span 2; }
-  .abx__sub   { order: 4; grid-column: 1 / span 2; }
-  .abx__p     { order: 5; }
-  .abx__stat  { order: 6; }
+  /* Порядок — как в мобильной версии сайта: заголовок, оба абзаца со
+     стрелками, первый снимок, цифры, второй снимок. Цифры идут по
+     колонкам десктопа (20 000 и 215 слева, 6 500 и 50 справа), а не
+     построчно — иначе на планшете пары разъезжаются. */
+  .abx__rule     { order: 1; grid-column: 1 / span 2; }
+  .abx__label    { order: 2; grid-column: 1 / span 2; }
+  .abx__title    { order: 3; grid-column: 1 / span 2; }
+  .abx__sub      { order: 4; grid-column: 1 / span 2; }
+  .abx__arrow--1 { order: 5; }
+  .abx__p--1     { order: 6; }
+  .abx__arrow--2 { order: 7; }
+  .abx__p--2     { order: 8; }
+  .abx__ph--1    { order: 9;  grid-column: 1 / span 2; }
+  .abx__stat--1  { order: 10; }
+  .abx__stat--3  { order: 11; }
+  .abx__stat--2  { order: 12; }
+  .abx__stat--4  { order: 13; }
+  .abx__ph--2    { order: 14; grid-column: 1 / span 2; }
   /* Вертикальный кадр 3:4 занимал почти весь экран телефона */
-  .abx__ph { order: 7; height: auto !important; aspect-ratio: 4 / 3; }
-  .abx__arrow { display: none; }
+  .abx__ph { height: auto !important; aspect-ratio: 4 / 3; }
+  .abx__arrow { width: 22px !important; height: 22px; margin-bottom: calc(-1 * var(--s4)); }
   .abx__stat .abx__hr { width: 100%; }
 }
 @media (max-width: 639px) {
@@ -926,6 +945,17 @@ a { color: inherit; }
   font-family: var(--font-display); font-weight: 300;
   font-size: 20px; line-height: 24px; }
 .cta__form  { left: 417px; top: 400px; width: 442px; max-width: none; }
+
+/* На телефоне снимок уходит под форму — как в мобильной версии сайта:
+   сначала заголовок и поля, фотография замыкает блок */
+@media (max-width: 1199px) {
+  .cta__rule  { order: 1; }
+  .cta__label { order: 2; }
+  .cta__title { order: 3; }
+  .cta__text  { order: 4; }
+  .cta__form  { order: 5; }
+  .cta__ph    { order: 6; }
+}
 
 @media (max-width: 1199px) {
   .section--cta { padding-block: 50px 100px; }
@@ -1353,17 +1383,18 @@ a.con__val:hover { color: var(--accent); }
   }
   .con > * { position: static !important; width: auto !important; }
   .con__map { height: 360px !important; margin-top: var(--s8); }
-  .cform { width: auto; height: auto; padding-inline: var(--gutter); }
-  .cform__ph { position: relative; left: auto; width: 100%; height: 280px; }
-  .cform__inner { position: static; width: auto; margin-top: var(--s8); }
-  .cform__lead { color: var(--primary); }
-  .cform__form { width: 100%; max-width: 460px; }
-  .form--dark input[type="text"], .form--dark input[type="tel"], .form--dark input[type="email"] {
-    color: var(--primary); border-bottom-color: var(--border);
+  /* На узком экране форма остаётся поверх снимка, как в мобильной версии
+     сайта: фото растягивается на весь блок, поля светлые по тёмному.
+     Раньше фото ложилось сверху отдельной картинкой, а форма уезжала
+     под него на бежевый фон и теряла связь со снимком. */
+  .cform { width: auto; height: auto; padding: 0; margin-inline: var(--gutter); }
+  .cform__ph { position: absolute; inset: 0; left: 0; width: 100%; height: 100%; }
+  .cform__ph::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(20,19,19,.72) 0%, rgba(20,19,19,.58) 55%, rgba(20,19,19,.72) 100%);
   }
-  .form--dark input::placeholder { color: var(--disabled); }
-  .form--dark .field--phone { border-bottom-color: var(--border); }
-  .form--dark .field--phone .field__code { color: var(--primary); }
+  .cform__inner { position: relative; width: auto; left: auto; top: auto; padding: var(--s10) var(--s6) var(--s12); }
+  .cform__form { width: 100%; max-width: 460px; }
   .form--dark .consent { color: var(--muted); }
   .form--dark .consent a { color: var(--accent); border-bottom-color: var(--accent); }
 }
@@ -1567,4 +1598,39 @@ a.con__val:hover { color: var(--accent); }
 @media (max-width: 1199px) {
   .abx__stat { width: auto; }
   .abx__stat .abx__hr { width: 100%; }
+}
+
+/* ============================================================
+   Мобильная типографика — кегли сняты с сайта, набор res-320.
+   Блок стоит в конце файла осознанно: правила компонентов
+   объявлены ниже своих секций, и при равной специфичности
+   побеждало бы то, что позже. Раньше из-за этого «Изготавливаем»
+   и «Дизайнерам и строителям» оставались десктопными.
+   ============================================================ */
+@media (max-width: 639px) {
+  /* заголовок 28, подзаголовок 16, цифры 28 — уже задано выше;
+     здесь описания, подписи и надзаголовки */
+  .section__label,
+  .abx__p, .adv__title, .adv__text,
+  .steps__text, .prod__pt-n, .prod__pt-t,
+  .rew__txt, .par__note, .cta__text, .section__note,
+  .btn {
+    font-size: 12px; line-height: 16px;
+  }
+  .adv__title { line-height: 15px; }
+  /* Названия предложений сайт держит на 16 даже на телефоне */
+  .deal__name, .steps__name, .rew__lvl-name { font-size: 16px; line-height: 21px; }
+  /* Подписи под цифрами остаются 14 */
+  .abx__c { font-size: 14px; line-height: 18px; }
+  /* Величина поинта соразмерна заголовку 28, но не спорит с ним */
+  .prod__pt-v { font-size: 24px; line-height: 22px; }
+}
+
+/* Вертикальный ритм «О компании» на телефоне — по сайту (набор res-320):
+   цифра → подпись 51, следующая цифра через 89. У нас шаг был 106. */
+@media (max-width: 639px) {
+  .abx { row-gap: var(--s5); }
+  .abx__stat .abx__hr { margin: var(--s4) 0 var(--s2); }
+  .abx__title { margin-top: var(--s2); }
+  .abx__ph { margin-block: var(--s5); }
 }
