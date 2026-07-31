@@ -1091,6 +1091,14 @@ a { color: inherit; }
 }
 @media (max-width: 639px) { .par__title { font-size: 28px; line-height: 25px; } }
 
+/* Обложка под первым экраном «Сотрудничества» */
+.section--cover { padding-block: 0; }
+.cover__ph {
+  height: 420px;
+  background-size: cover; background-position: center;
+}
+@media (max-width: 959px) { .cover__ph { height: 300px; } }
+
 /* В артбордах ширина заголовка задана координатами, ограничение в 700 мешает */
 .par__title, .rew__title, .cta__title, .abx__title,
 .gal__title, .rev__title, .con__title { max-width: none; }
@@ -1506,7 +1514,15 @@ a.con__val:hover { color: var(--accent); }
   .steps__rule, .steps__label, .steps__title, .steps__sub, .steps__ph,
   .deal__rule, .deal__label, .deal__title, .deal__ph { grid-column: 1 / span 2; }
   .steps__rule, .deal__rule { display: none; }
-  .steps__ph { height: 320px; }
+  /* Фото стояло в хвосте блока, после всех четырёх шагов, и повисало
+     само по себе. Ставим его сразу под подзаголовком — иллюстрацией
+     к блоку, как в мобильной версии сайта. */
+  .steps__ph { height: 320px; order: 1; }
+  .steps__rule  { order: -4; }
+  .steps__label { order: -3; }
+  .steps__title { order: -2; }
+  .steps__sub   { order: -1; }
+  .steps__item  { order: 2; }
   .deal__ph { height: 300px; }
   .deal__offer { justify-items: stretch; }
   .deal__offer .btn { justify-self: start; }
