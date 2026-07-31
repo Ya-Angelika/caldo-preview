@@ -340,3 +340,45 @@
     start();
   });
 })();
+
+/* Сцена «Работать с нами выгодно»: блок закрепляется, и по мере
+   прокрутки снимок сменяется, а предложения меняют друг друга —
+   так же устроен блок rec819904326 на сайте. Скрипт только считает
+   прогресс 0…1 и кладёт его в --p, всё остальное делает CSS. */
+(function () {
+  var scene = document.querySelector('.deal--scene');
+  if (!scene) return;
+  var section = scene.closest('.section--deal');
+  if (!section) return;
+
+  var mq = window.matchMedia('(min-width: 1200px)');
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var ticking = false;
+
+  function update() {
+    ticking = false;
+    var box = section.getBoundingClientRect();
+    var run = box.height - scene.offsetHeight;   // сколько блок стоит закреплённым
+    if (run <= 0) return;
+    var p = (-box.top) / run;
+    scene.style.setProperty('--p', Math.min(1, Math.max(0, p)).toFixed(4));
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }
+
+  function apply() {
+    var on = mq.matches && !still.matches;
+    section.classList.toggle('has-scene', on);
+    if (on) { window.addEventListener('scroll', onScroll, { passive: true }); update(); }
+    else { window.removeEventListener('scroll', onScroll); scene.style.removeProperty('--p'); }
+  }
+
+  apply();
+  mq.addEventListener('change', apply);
+  still.addEventListener('change', apply);
+  window.addEventListener('resize', onScroll, { passive: true });
+})();

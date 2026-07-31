@@ -1372,24 +1372,24 @@ a.con__val:hover { color: var(--accent); }
   width: 1200px; height: 510px;
   margin: var(--s20) auto 0;
 }
-/* Размеры из исходника rec632151438: снимок 652 × 510 на 78/725,
-   заголовок 360 на 138/785, форма 444 на 138/873 — то есть 60 от
-   верха снимка до заголовка и 148 до формы. Раньше снимок был
-   растянут на 1043 и показывал не тот кусок кадра. */
+/* Замерено по десктопному рефу (окно 1920 = масштаб 1,6 к сетке 1200):
+   снимок от 78 до 1112 — это 1043 × 510; заголовок 138/69, интерлиньяж
+   24; форма 444 на 138/178. Блок на странице «Дизайнерам» у́же (652),
+   но здесь кадр широкий — как на рефе. */
 .cform__ph {
   position: absolute; left: 78px; top: 0;
-  width: 652px; height: 510px;
+  width: 1043px; height: 510px;
   background-size: cover; background-position: center;
 }
 .cform__inner {
-  position: absolute; left: 138px; top: 60px; width: 444px;
-  display: grid; grid-template-rows: 88px auto;   /* форма ровно на 148 от верха снимка */
+  position: absolute; left: 138px; top: 69px; width: 444px;
+  display: grid; grid-template-rows: 109px auto;   /* форма ровно на 178 от верха снимка */
 }
 .cform__lead {
   margin: 0;
   width: 360px; max-width: 100%;
   font-family: var(--font-display); font-weight: 300;
-  font-size: 20px; line-height: 19px; text-transform: uppercase;
+  font-size: 20px; line-height: 24px; text-transform: uppercase;
   color: var(--white);
 }
 .cform__form { width: 444px; max-width: 100%; }
@@ -1568,15 +1568,53 @@ a.con__val:hover { color: var(--accent); }
   left: 80px; top: 285px; width: 500px; height: 416px;
   background-size: cover; background-position: center;
 }
-/* На десктопе оба снимка стоят на одних координатах — как в оригинале,
-   где верхний перекрывает нижний. Показываем один, второй ждёт мобилки. */
-.deal__ph--1 { display: none; }
 
 /* Оригинал ставит предложения в ряд: 339 и 679 по горизонтали, 434 по
    вертикали, кнопка под названием на 496 */
 .deal__offer { top: 434px; width: 250px; display: grid; gap: 28px; justify-items: start; }
 .deal__offer--1 { left: 339px; }
 .deal__offer--2 { left: 679px; width: 280px; }
+
+/* ------------------------------------------------------------------
+   Сцена на прокрутке — как в блоке rec819904326.
+   Там блок закрепляется и меняет содержимое: снимок Aria уезжает
+   вправо на 440 и сменяется снимком Cube, «Оптовые продажи» уходят
+   влево на 350 и гаснут, вместо них появляются «Дизайнерам и
+   строителям» и едут влево на 130. Значения mx и порядок шагов
+   сняты с data-animate-sbs-opts.
+   Прогресс скролла кладёт в --p скрипт; без него и при отключённой
+   анимации блок остаётся статичным и показывает оба предложения.
+   ------------------------------------------------------------------ */
+@media (min-width: 1200px) {
+  .deal--scene { --p: 0; }
+  .section--deal.has-scene { height: 1700px; }
+  .has-scene .deal--scene { position: sticky; top: 90px; }
+
+  .deal--scene .deal__ph--2 {                      /* Aria — первый кадр */
+    transform: translateX(calc(440px * var(--p)));
+    opacity: calc(1 - clamp(0, (var(--p) - .45) * 4, 1));
+  }
+  .deal--scene .deal__ph--1 {                      /* Cube — второй кадр */
+    transform: translateX(calc(440px * var(--p)));
+    opacity: clamp(0, (var(--p) - .45) * 4, 1);
+  }
+  .deal--scene .deal__offer--2 {                   /* «Оптовые продажи» уходят */
+    transform: translateX(calc(-350px * var(--p)));
+    opacity: calc(1 - clamp(0, (var(--p) - .35) * 4, 1));
+  }
+  .deal--scene .deal__offer--1 {                   /* «Дизайнерам» появляются */
+    transform: translateX(calc(-130px * var(--p)));
+    opacity: clamp(0, (var(--p) - .5) * 4, 1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section--deal.has-scene { height: auto; }
+  .has-scene .deal--scene { position: static; }
+  .deal--scene .deal__ph--1, .deal--scene .deal__ph--2,
+  .deal--scene .deal__offer--1, .deal--scene .deal__offer--2 {
+    transform: none; opacity: 1;
+  }
+}
 .deal__name {
   font-family: var(--font-display); font-weight: 300;
   font-size: 16px; line-height: 21px; text-transform: uppercase;
@@ -1603,7 +1641,7 @@ a.con__val:hover { color: var(--accent); }
   /* Каждое предложение со своим снимком, как в мобильной версии сайта:
      Cube — дизайнерам и строителям, Aria — оптовым продажам */
   .deal__ph { height: 300px; }
-  .deal__ph--1 { display: block; order: 1; }
+  .deal__ph--1 { order: 1; }
   .deal__offer--1 { order: 2; }
   .deal__ph--2 { order: 3; }
   .deal__offer--2 { order: 4; }
