@@ -563,18 +563,21 @@ a { color: inherit; }
    ============================================================ */
 .prod { margin-top: var(--s24); }
 .prod__body {
-  display: grid; grid-template-columns: 336px 1fr;
+  display: grid; grid-template-columns: 500px 1fr;
   column-gap: 0; align-items: start;
   margin-top: var(--s8);
 }
 .prod__col { display: grid; align-content: start; }
-.prod__col--facts { width: 300px; }
+.prod__col--facts { width: 460px; }
 .prod__col--term  { width: 300px; }
 
 /* Поинты «О продукции»: величина — что это — пояснение.
    Тот же приём, что в уровнях вознаграждения, только вдвое мельче:
    30 против 60, блок вспомогательный и не должен спорить с заголовком. */
-.prod__points { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s8); }
+.prod__points {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--s8) var(--s6);
+}
 .prod__points li { display: grid; gap: var(--s1); }
 .prod__pt-v {
   font-family: var(--font-display); font-weight: 300;
