@@ -1409,7 +1409,8 @@ a.con__val:hover { color: var(--accent); }
   /* Как в мобильной версии сайта: снимок на весь блок, поверх него
      тёмная полупрозрачная панель с заголовком и полями. Панель не
      доходит до низа — под ней видно продолжение кадра. */
-  .cform { width: auto; height: auto; padding: 0 0 70px; margin-inline: var(--gutter); }
+    /* Под кнопкой в исходнике остаётся 27 px кадра, а не 70 */
+  .cform { width: auto; height: auto; padding: 0 0 27px; margin-inline: var(--gutter); }
   .cform__ph { position: absolute; inset: 0; left: 0; width: 100%; height: 100%; }
   .cform__ph::after {
     content: ""; position: absolute; inset: 0;
@@ -1420,8 +1421,8 @@ a.con__val:hover { color: var(--accent); }
      шире исходного 300 × 354 и местами светлее. */
   .cform__inner {
     position: relative; width: auto; left: auto; top: auto;
-    padding: var(--s8) var(--s6) var(--s10);
-    grid-template-rows: 65px auto;   /* 820 → 885 в исходнике */
+    padding: var(--s8) var(--s6) 0;   /* низ задаёт сам блок: 27 кадра под кнопкой */
+    grid-template-rows: 88px auto;
   }
   .cform__form { width: 100%; max-width: 460px; }
   /* Согласие на тёмной форме — белым, без красной ссылки: в рефе она
@@ -1718,7 +1719,9 @@ a.con__val:hover { color: var(--accent); }
   .form--dark .consent { margin-bottom: 10px; }
   .form--dark .consent { font-size: 10px; line-height: 14px; }
   .form--dark .btn { font-size: 12px; }
-  .cform__lead { font-size: 16px; line-height: 19px; width: auto; }
+  /* Исходник держит на телефоне 16, но так заголовок теряется —
+     оставляем 20 и раздвигаем строку под него */
+  .cform__lead { font-size: 20px; line-height: 22px; width: auto; }
   .cform__form { width: auto; }
 }
 
