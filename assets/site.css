@@ -1669,11 +1669,22 @@ a.con__val:hover { color: var(--accent); }
    высоту панели и радиатор уходил из кадра. */
 @media (max-width: 639px) {
   .cform__ph { background-position: 78% center; }
-  /* Кнопка на сайте 260 из 300 — не во всю ширину панели */
-  .cform__form .btn { width: 100%; max-width: 260px; }
-  .form--dark input::placeholder { color: rgba(255, 255, 255, .45); }
-  .form--dark .field--phone .field__code { color: rgba(255, 255, 255, .7); }
 }
+
+/* Размеры тёмной формы — из инлайновых стилей блока rec632151438.
+   Они не зависят от брейкпоинта, значит верны и на десктопе:
+   поля 12 / 40, согласие 10, кнопка 200 × 50. */
+.form--dark input[type="text"],
+.form--dark input[type="tel"],
+.form--dark input[type="email"],
+.form--dark .field--phone .field__code { font-size: 12px; }
+.form--dark input[type="text"],
+.form--dark input[type="tel"],
+.form--dark input[type="email"] { height: 40px; }
+.form--dark input::placeholder { color: rgba(255, 255, 255, .45); }
+.form--dark .consent { font-size: 10px; line-height: 14px; }
+.form--dark .consent input { width: 16px; height: 16px; }
+.form--dark .btn { width: 200px; height: 50px; padding: 0 15px; font-weight: 300; }
 
 /* Флажок кода страны — как в форме сайта */
 .field--phone .field__code::before {
