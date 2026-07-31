@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://static.tildacdn.com" crossorigin>
 <link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://static.tildacdn.com/css/fonts-tildasans.css"></noscript>
-<link rel="stylesheet" href="assets/site.css?v=34">
+<link rel="stylesheet" href="assets/site.css?v=35">
 </head>
 
 <body>
@@ -226,11 +226,30 @@
         <div class="prod__body">
           <div class="prod__col prod__col--facts">
             <span class="section__label">О продукции</span>
-            <ul class="prod__facts">
-              <li>4 серии — Bordo, Aria, Ronda, Cube</li>
-              <li>Длина 500–2500 мм, от 2 секций</li>
-              <li>Любой цвет по каталогу RAL</li>
-              <li>Россия и страны СНГ</li>
+            <!-- Раньше это был список строк с тире. Собрано поинтами по образцу
+                 уровней вознаграждения: величина, под ней что это, ниже пояснение.
+                 Кегль величины 30, а не 60 — блок вспомогательный. -->
+            <ul class="prod__points">
+              <li>
+                <span class="prod__pt-v">4</span>
+                <span class="prod__pt-n">серии</span>
+                <span class="prod__pt-t">Bordo, Aria, Ronda, Cube</span>
+              </li>
+              <li>
+                <span class="prod__pt-v">500–2500</span>
+                <span class="prod__pt-n">длина, мм</span>
+                <span class="prod__pt-t">От двух секций</span>
+              </li>
+              <li>
+                <span class="prod__pt-v">RAL</span>
+                <span class="prod__pt-n">цвет</span>
+                <span class="prod__pt-t">Любой по каталогу</span>
+              </li>
+              <li>
+                <span class="prod__pt-v">СНГ</span>
+                <span class="prod__pt-n">доставка</span>
+                <span class="prod__pt-t">Россия и страны СНГ</span>
+              </li>
             </ul>
 
             <!-- ТЗ просил ссылку на «Контакты». Ссылка-повтор убрана,
@@ -329,13 +348,18 @@
       <span class="section__label deal__label">Дизайнерам, строителям и&nbsp;оптовикам</span>
       <h2 class="section__title deal__title">Работать с&nbsp;нами выгодно и&nbsp;удобно</h2>
 
-      <div class="deal__ph" role="img" aria-label="Радиатор CALDO Aria в интерьере"
-           style="background-image: url('https://static.tildacdn.com/tild6439-3733-4564-b034-626332636531/Aria__1.jpg')"></div>
-
+      <!-- В оригинале у блока два снимка: Cube и Aria. На десктопе они лежат
+           друг на друге на 80/285 и подменяются анимацией, на узком экране
+           встают в поток — каждый над своим предложением. -->
+      <div class="deal__ph deal__ph--1" role="img" aria-label="Радиаторы CALDO Cube на кухне"
+           style="background-image: url('https://static.tildacdn.com/tild3732-3738-4634-a366-646633386634/Cube__3_2.png')"></div>
       <div class="deal__offer deal__offer--1">
         <span class="deal__name">Дизайнерам и&nbsp;строителям</span>
         <a class="btn btn--dark btn--lg" href="partners.html">Узнать подробности условий</a>
       </div>
+
+      <div class="deal__ph deal__ph--2" role="img" aria-label="Радиатор CALDO Aria в интерьере"
+           style="background-image: url('https://static.tildacdn.com/tild6439-3733-4564-b034-626332636531/Aria__1.jpg')"></div>
       <div class="deal__offer deal__offer--2">
         <span class="deal__name">Оптовые продажи от&nbsp;300 000 ₽</span>
         <a class="btn btn--dark btn--lg" href="partners.html">Узнать подробности условий</a>
@@ -382,6 +406,6 @@
   </div>
 </footer>
 
-<script src="assets/site.js?v=34"></script>
+<script src="assets/site.js?v=35"></script>
 </body>
 </html>

@@ -571,13 +571,18 @@ a { color: inherit; }
 .prod__col--facts { width: 300px; }
 .prod__col--term  { width: 300px; }
 
-.prod__facts {
-  list-style: none; margin: 0; padding: 0;
-  display: grid; gap: var(--s4);
-  font-size: 14px; line-height: 18px;
+/* Поинты «О продукции»: величина — что это — пояснение.
+   Тот же приём, что в уровнях вознаграждения, только вдвое мельче:
+   30 против 60, блок вспомогательный и не должен спорить с заголовком. */
+.prod__points { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s8); }
+.prod__points li { display: grid; gap: var(--s1); }
+.prod__pt-v {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: 30px; line-height: 27px;
+  font-variant-numeric: tabular-nums;
 }
-.prod__facts li { position: relative; padding-left: var(--s4); }
-.prod__facts li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+.prod__pt-n { font-size: 14px; line-height: 18px; }
+.prod__pt-t { font-size: 14px; line-height: 18px; color: var(--muted); }
 
 /* Контакты коротко — вместо ссылки-повтора «Контакты» */
 .prod__contacts {
@@ -631,7 +636,7 @@ a { color: inherit; }
   .prod__body { grid-template-columns: 1fr; row-gap: var(--s10); }
 }
 @media (max-width: 639px) {
-  .prod__facts, .docs__row { grid-template-columns: 1fr; }
+  .docs__row { grid-template-columns: 1fr; }
 }
 
 /* Преимущества — композиция блока rec819904311: фотоколлаж по краям,
@@ -1497,9 +1502,15 @@ a.con__val:hover { color: var(--accent); }
   left: 80px; top: 285px; width: 500px; height: 416px;
   background-size: cover; background-position: center;
 }
-.deal__offer { left: 660px; width: 400px; display: grid; gap: var(--s5); justify-items: start; }
-.deal__offer--1 { top: 300px; }
-.deal__offer--2 { top: 500px; }
+/* На десктопе оба снимка стоят на одних координатах — как в оригинале,
+   где верхний перекрывает нижний. Показываем один, второй ждёт мобилки. */
+.deal__ph--1 { display: none; }
+
+/* Оригинал ставит предложения в ряд: 339 и 679 по горизонтали, 434 по
+   вертикали, кнопка под названием на 496 */
+.deal__offer { top: 434px; width: 250px; display: grid; gap: 28px; justify-items: start; }
+.deal__offer--1 { left: 339px; }
+.deal__offer--2 { left: 679px; width: 280px; }
 .deal__name {
   font-family: var(--font-display); font-weight: 300;
   font-size: 16px; line-height: 21px; text-transform: uppercase;
@@ -1523,7 +1534,14 @@ a.con__val:hover { color: var(--accent); }
   .steps__title { order: -2; }
   .steps__sub   { order: -1; }
   .steps__item  { order: 2; }
+  /* Каждое предложение со своим снимком, как в мобильной версии сайта:
+     Cube — дизайнерам и строителям, Aria — оптовым продажам */
   .deal__ph { height: 300px; }
+  .deal__ph--1 { display: block; order: 1; }
+  .deal__offer--1 { order: 2; }
+  .deal__ph--2 { order: 3; }
+  .deal__offer--2 { order: 4; }
+  .deal__rule { order: -4; } .deal__label { order: -3; } .deal__title { order: -2; }
   .deal__offer { justify-items: stretch; }
   .deal__offer .btn { justify-self: start; }
 }
