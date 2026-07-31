@@ -7,8 +7,8 @@
    Лицензия: prototype/fonts/Web Font EULA 1.7.1.txt */
 @font-face {
   font-family: 'Alethia Next Web';
-  src: url('fonts/alethianext-light-webfont.woff2') format('woff2'),
-       url('fonts/alethianext-light-webfont.woff') format('woff');
+  src: url('../fonts/alethianext-light-webfont.woff2') format('woff2'),
+       url('../fonts/alethianext-light-webfont.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -17,8 +17,8 @@
    это отдельный шрифтовой файл, а не наклон, сделанный браузером */
 @font-face {
   font-family: 'Alethia Next Web';
-  src: url('fonts/alethianext-lightitalic-webfont.woff2') format('woff2'),
-       url('fonts/alethianext-lightitalic-webfont.woff') format('woff');
+  src: url('../fonts/alethianext-lightitalic-webfont.woff2') format('woff2'),
+       url('../fonts/alethianext-lightitalic-webfont.woff') format('woff');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
