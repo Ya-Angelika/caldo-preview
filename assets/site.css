@@ -416,6 +416,11 @@ a { color: inherit; }
   margin-bottom: 31px;          /* ДС: надзаголовок на 81 */
 }
 #about > .shell::before { content: none; }
+/* Если у первого блока секции есть своя линия, разделитель секции
+   рисует вторую такую же прямо под ней — как было в «Сотрудничестве»
+   над «Преимуществами». Оставляем одну. */
+.section:has(> .shell > .rule:first-child) > .shell::before,
+.section:has(> .shell > *:first-child > .rule:first-child) > .shell::before { content: none; }
 #about { padding-top: 0; }   /* артборд сам держит вертикаль от нуля */
 
 .section__head {
