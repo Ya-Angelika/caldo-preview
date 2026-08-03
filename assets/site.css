@@ -1129,13 +1129,7 @@ a { color: inherit; }
 }
 @media (max-width: 639px) { .par__title { font-size: 28px; line-height: 25px; } }
 
-/* Обложка под первым экраном «Сотрудничества» */
-.section--cover { padding-block: 0; }
-.cover__ph {
-  height: 420px;
-  background-size: cover; background-position: center;
-}
-@media (max-width: 959px) { .cover__ph { height: 300px; } }
+
 
 /* В артбордах ширина заголовка задана координатами, ограничение в 700 мешает */
 .par__title, .rew__title, .cta__title, .abx__title,
