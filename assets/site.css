@@ -1766,3 +1766,21 @@ a.con__val:hover { color: var(--accent); }
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .15);
 }
 .field--phone .field__code::after { content: "▾"; margin: 0 var(--s3) 0 var(--s2); opacity: .6; font-size: 10px; }
+
+/* Отступы между блоками на телефоне. Десктопные 50 сверху и 100 снизу
+   плюс собственный отступ блока в 100 давали до 283 px пустоты —
+   на узком экране это полполотна. Держим 30 / 50 и половинный отступ
+   у блоков, которые задают его сами. */
+@media (max-width: 639px) {
+  .section, .section--par { padding-block: 20px 30px; }
+  .page > .section:first-child { padding-top: 20px; }
+  /* Внутри секции блоки разделяет собственный отступ, а первому он не
+     нужен — там уже сработал padding секции */
+  .advs, .prod { margin-top: var(--s10); }
+  .section--advs .advs, .section--prod .prod { margin-top: 0; }
+  .cform { margin-top: var(--s10); }
+  .section--cform .cform { margin-top: 0; }
+  .rev__places { margin-top: var(--s8); }
+  .advs__body { gap: var(--s8); }
+  .abx__ph { margin-block: var(--s3); }
+}
